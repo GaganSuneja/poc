@@ -25,6 +25,8 @@ public class UserRepo {
         } catch (DataAccessException e) {
             e.printStackTrace();
         }
+
+        return true;
     }
 
 }

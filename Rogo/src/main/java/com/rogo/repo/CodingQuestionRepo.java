@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -35,7 +34,7 @@ public class CodingQuestionRepo implements QuestionRepo<CodingQuestion> {
     @Override
     public void addQuestion(CodingQuestion question) {
         jdbcTemplate.update("insert into coding_question (q_text,q_mark) values(?,?)", new Object[]{
-                question.getQ_text(), question.getQ_mark()
+                question.getQuestionText(), question.getQ_mark()
         });
     }
 }

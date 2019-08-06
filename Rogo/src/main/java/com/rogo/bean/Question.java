@@ -7,15 +7,15 @@ public class Question {
     private int q_type_id;
     private int q_mark;
 
-    public int getQ_id() {
+    public int getQuestionId() {
         return q_id;
     }
 
-    public void setQ_id(int q_id) {
+    public void setQuestionId(int q_id) {
         this.q_id = q_id;
     }
 
-    public String getQ_text() {
+    public String getQuestionText() {
         return q_text;
     }
 

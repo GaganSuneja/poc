@@ -29,14 +29,7 @@ public class RogoController {
     @PostMapping(path="/login")
     public ResponseEntity<Object> login(@RequestBody UserLogin user){
         Map responseMap  = userService.userLogin(user);
-        HttpStatus responseCode;
-        if(responseMap.containsKey("error")){
-            responseCode = HttpStatus.UNAUTHORIZED;
-        }
-        else{
-            responseCode = HttpStatus.OK;
-        }
-        return new ResponseEntity(userService.userLogin(user), responseCode);
+        return new ResponseEntity(userService.userLogin(user), responseMap.containsKey("error") ? HttpStatus.UNAUTHORIZED : HttpStatus.OK);
     }
 
     @GetMapping("/home")

@@ -1,6 +1,7 @@
 package com.rogo.controller;
 
 import com.rogo.bean.Question;
+import com.rogo.bean.ResponseMap;
 import com.rogo.bean.User;
 import com.rogo.bean.UserLogin;
 import com.rogo.service.QuestionService;
@@ -29,14 +30,14 @@ public class RogoController {
 
     @PostMapping(path = "/login")
     public ResponseEntity<Object> login(@RequestBody UserLogin user) {
-        Map responseMap = userService.userLogin(user);
-        return new ResponseEntity<>(responseMap, responseMap.containsKey("error") ? HttpStatus.UNAUTHORIZED : HttpStatus.OK);
+        ResponseMap responseMap = userService.userLogin(user);
+        return new ResponseEntity<>(responseMap, responseMap.getError() ? HttpStatus.UNAUTHORIZED : HttpStatus.OK);
     }
 
     @PutMapping(path = "/signup")
     public ResponseEntity signUp(@RequestBody User newUser) {
-        Map responseMap = userService.addUser(newUser);
-        return new ResponseEntity<>(responseMap,responseMap.containsKey("error") ? HttpStatus.UNAUTHORIZED : HttpStatus.OK );
+        ResponseMap map =  userService.addUser(newUser);
+        return new ResponseEntity<>(map,map.getError() ? HttpStatus.UNAUTHORIZED : HttpStatus.OK );
     }
 
     @GetMapping("/home")

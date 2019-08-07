@@ -17,43 +17,30 @@ public class UserServiceImpl implements UserService {
     @Autowired
     ResponseMap responseMap;
 
-    public HashMap<String, String> userLogin(UserLogin userLoginObj) {
-
-        Map<String, String> responseMap = new HashMap<String, String>();
-
+    public ResponseMap userLogin(UserLogin userLoginObj) {
         User user = userRepo.getUserByUsername(userLoginObj.getUsername());
-
         if (user != null) {
             if (user.getUserPassword().compareTo(userLoginObj.getPassword()) == 0) {
-                responseMap.put("Login", "True");
+               responseMap.setResponseSucess("Login Succesfull");
             } else {
-                responseMap.put("error", "True");
-                responseMap.put("errorMessage", "Password do not match");
+               responseMap.setResponseError("Password do not match");
             }
-            return (HashMap<String, String>) responseMap;
+            return responseMap;
         }
-        responseMap.put("error", "True");
-        responseMap.put("errorMessage", "User Not Found");
-        return (HashMap<String, String>) responseMap;
+        responseMap.setResponseError("User not found!");
+        return responseMap;
 
     }
 
-    public HashMap<String, String> addUser(User newUser) {
+    public ResponseMap addUser(User newUser) {
         int rowsAffected = userRepo.addUser(newUser);
         boolean isUserAdded = (rowsAffected > 0);
-
-        Map<String,String> responseMap2 = new HashMap<>();
-
         if (isUserAdded) {
-            responseMap2.put("success", "true");
-            responseMap2.put("successMessage", "user added successfully");
+            responseMap.setResponseSucess("user added successfully");
         } else {
-            responseMap2.put("error", "true");
-            responseMap2.put("errorMessage", "user could not be added!");
+            responseMap.setResponseError("user could not be added");
         }
-
-        return (HashMap<String, String>) responseMap2;
-
+        return responseMap;
     }
 
 }

@@ -19,43 +19,43 @@ public class McqQuestion extends Question{
         this.answer_key = answer_key;
     }
 
-    public String getOption_a() {
+    public String getOptionA() {
         return option_a;
     }
 
-    public void setOption_a(String option_a) {
+    public void setOptionA(String option_a) {
         this.option_a = option_a;
     }
 
-    public String getOption_b() {
+    public String getOptionB() {
         return option_b;
     }
 
-    public void setOption_b(String option_b) {
+    public void setOptionB(String option_b) {
         this.option_b = option_b;
     }
 
-    public String getOption_c() {
+    public String getoptionC() {
         return option_c;
     }
 
-    public void setOption_c(String option_c) {
+    public void setOptionC(String option_c) {
         this.option_c = option_c;
     }
 
-    public String getOption_d() {
+    public String getOptionD() {
         return option_d;
     }
 
-    public void setOption_d(String option_d) {
+    public void setOptionD(String option_d) {
         this.option_d = option_d;
     }
 
-    public int getAnswer_key() {
+    public int getAnswerKey() {
         return answer_key;
     }
 
-    public void setAnswer_key(int answer_key) {
+    public void setAnswerKey(int answer_key) {
         this.answer_key = answer_key;
     }
 

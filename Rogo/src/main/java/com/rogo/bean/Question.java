@@ -19,26 +19,27 @@ public class Question {
         return q_text;
     }
 
-    public void setQ_text(String q_text) {
+    public void setQuestionText(String q_text) {
         this.q_text = q_text;
     }
 
-    public int getQ_type_id() {
+    public int getQuestionTypeId() {
         return q_type_id;
     }
 
-    public void setQ_type_id(int q_type_id) {
+    public void setQuestionTypeId(int q_type_id) {
         this.q_type_id = q_type_id;
     }
 
-    public int getQ_mark() {
+    public int getQuestionMarks() {
         return q_mark;
     }
 
-    public void setQ_mark(int q_mark) {
+    public void setQuestionMarks(int q_mark) {
         this.q_mark = q_mark;
     }
 }
+
 
 
 

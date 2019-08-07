@@ -35,13 +35,13 @@ public class McqQuestionRepo implements QuestionRepo<McqQuestion> {
         jdbcTemplate.update("insert into mcq_questions(q_text,option_a,option_b,option_c,option_d,answer_key,q_type_id,q_mark) values (?,?,?,?,?,?,?,?)",
                 new Object[]{
                         mcqQuestion.getQuestionText(),
-                        mcqQuestion.getOption_a(),
-                        mcqQuestion.getOption_b(),
-                        mcqQuestion.getOption_c(),
-                        mcqQuestion.getOption_d(),
-                        mcqQuestion.getAnswer_key(),
-                        mcqQuestion.getQ_type_id(),
-                        mcqQuestion.getQ_mark()
+                        mcqQuestion.getOptionA(),
+                        mcqQuestion.getOptionB(),
+                        mcqQuestion.getoptionC(),
+                        mcqQuestion.getOptionD(),
+                        mcqQuestion.getAnswerKey(),
+                        mcqQuestion.getQuestionId(),
+                        mcqQuestion.getQuestionMarks()
                 }
         );
     }

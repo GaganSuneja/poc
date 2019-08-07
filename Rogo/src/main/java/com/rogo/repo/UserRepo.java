@@ -30,4 +30,10 @@ public class UserRepo {
         return user;
     }
 
+//    public void addUser(User newUser){
+////        jdbcTemplate.update("insert into user(user_name,first_name,last_name,user_type,user_password,email)values("")", new Object[]{
+////
+////                });
+////    }
+
 }

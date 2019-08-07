@@ -30,10 +30,21 @@ public class UserRepo {
         return user;
     }
 
-//    public void addUser(User newUser){
-////        jdbcTemplate.update("insert into user(user_name,first_name,last_name,user_type,user_password,email)values("")", new Object[]{
-////
-////                });
-////    }
+    public int addUser(User newUser){
+        int noOfRowsAffected = -1;
+        try {
+            noOfRowsAffected = jdbcTemplate.update("insert into users(user_name,first_name,last_name,user_password,email)" +
+                    "values(?,?,?,?,?)", new Object[]{
+                    newUser.getUserName(),
+                    newUser.getFirstName(),
+                    newUser.getLastName(),
+                    newUser.getUserPassword(),
+                    newUser.getEmail()
+            });
+        }catch(DataAccessException e){
+            e.printStackTrace();
+        }
+        return noOfRowsAffected;
+    }
 
 }

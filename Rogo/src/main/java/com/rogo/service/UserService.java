@@ -9,5 +9,5 @@ public interface UserService {
 
      HashMap<String, String> userLogin(UserLogin userLoginObj);
 
-     void addUser(User user);
+      HashMap<String,String> addUser(User newUser);
 }

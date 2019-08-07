@@ -1,0 +1,38 @@
+<body>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+              <div class="card card-signin my-5">
+                <div class="card-body">
+                  <h5 class="card-title text-center">Sign UP</h5>
+                  <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" >
+                      <div class="form-label-group" >
+                          Username: <input type="text"  class="form-control" placeholder="USERname" formControlName="user"  >
+                         </div>
+                    <div class="form-label-group">
+                     First name: <input type="text"  class="form-control" placeholder="Firstname" formControlName="first"  >
+                    </div>
+                    <div class="form-label-group">
+                        last name: <input type="text"  class="form-control" placeholder="lastname" formControlName="last" >
+                           </div>
+
+                           <div class="form-label-group">
+                                Email: <input type="email" class="form-control" placeholder="email" formControlName="email" >
+                               </div> 
+                    <div class="form-label-group">
+                      Password:<input type="password"  class="form-control" placeholder="Password" formControlName="pass">
+                    </div>
+        
+                    
+                    <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">SUBMIT</button>
+                    <hr class="my-4">
+                    <button class="btn btn-lg btn-google btn-block text-uppercase" type="button" (click)="onpress()"><i class="fab fa-google mr-2"></i> Sign in </button>
+                   
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </body>
+

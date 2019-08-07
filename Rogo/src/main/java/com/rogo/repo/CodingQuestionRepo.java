@@ -34,7 +34,7 @@ public class CodingQuestionRepo implements QuestionRepo<CodingQuestion> {
     @Override
     public void addQuestion(CodingQuestion question) {
         jdbcTemplate.update("insert into coding_question (q_text,q_mark) values(?,?)", new Object[]{
-                question.getQuestionText(), question.getQ_mark()
+                question.getQuestionText(), question.getQuestionMarks()
         });
     }
 }

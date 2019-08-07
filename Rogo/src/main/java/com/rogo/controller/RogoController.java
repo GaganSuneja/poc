@@ -1,6 +1,7 @@
 package com.rogo.controller;
 
 import com.rogo.bean.Question;
+import com.rogo.bean.User;
 import com.rogo.bean.UserLogin;
 import com.rogo.service.QuestionService;
 import com.rogo.service.UserServiceImpl;
@@ -20,21 +21,27 @@ public class RogoController {
     @Autowired
     UserServiceImpl userService;
 
-    @GetMapping(path="/getquestion/{id}")
+    @GetMapping(path = "/getquestion/{id}")
     @ResponseBody
     public ResponseEntity<List<Question>> GetMcqQuestions(@PathVariable("id") String id) {
-        return new ResponseEntity(questionService.getAll(id), HttpStatus.OK);
+        return new ResponseEntity<>(questionService.getAll(id), HttpStatus.OK);
     }
 
-    @PostMapping(path="/login")
-    public ResponseEntity<Object> login(@RequestBody UserLogin user){
-        Map responseMap  = userService.userLogin(user);
-        return new ResponseEntity(userService.userLogin(user), responseMap.containsKey("error") ? HttpStatus.UNAUTHORIZED : HttpStatus.OK);
+    @PostMapping(path = "/login")
+    public ResponseEntity<Object> login(@RequestBody UserLogin user) {
+        Map responseMap = userService.userLogin(user);
+        return new ResponseEntity<>(responseMap, responseMap.containsKey("error") ? HttpStatus.UNAUTHORIZED : HttpStatus.OK);
+    }
+
+    @PutMapping(path = "/signup")
+    public ResponseEntity signUp(@RequestBody User newUser) {
+        Map responseMap = userService.addUser(newUser);
+        return new ResponseEntity<>(responseMap,responseMap.containsKey("error") ? HttpStatus.UNAUTHORIZED : HttpStatus.OK );
     }
 
     @GetMapping("/home")
-    public ResponseEntity home(){
-        return new ResponseEntity(new Object[]{"d1","v1"}, HttpStatus.OK);
+    public ResponseEntity home() {
+        return new ResponseEntity(new Object[]{"d1", "v1"}, HttpStatus.OK);
     }
 
 }

@@ -32,16 +32,19 @@ public class McqQuestionRepo implements QuestionRepo<McqQuestion> {
     }
 
     public void addQuestion(McqQuestion mcqQuestion) {
-        jdbcTemplate.update("insert into mcq_questions(q_text,option_a,option_b,option_c,option_d,answer_key,q_type_id,q_mark) values (?,?,?,?,?,?,?,?)",
-                new Object[]{
-                        mcqQuestion.getQuestionText(),
-                        mcqQuestion.getOptionA(),
-                        mcqQuestion.getOptionB(),
-                        mcqQuestion.getoptionC(),
-                        mcqQuestion.getOptionD(),
-                        mcqQuestion.getAnswerKey(),
-                        mcqQuestion.getQuestionId(),
-                        mcqQuestion.getQuestionMarks()
+        jdbcTemplate.update("insert into mcq_questions(q_text," +
+                        "option_a,option_b,option_c,option_d,answer_key,q_type_id,q_mark,q_tag)" +
+                        " values (?,?,?,?,?,?,?,?,?)",
+                        new Object[]{
+                                mcqQuestion.getQuestionText(),
+                                mcqQuestion.getOptionA(),
+                                mcqQuestion.getOptionB(),
+                                mcqQuestion.getoptionC(),
+                                mcqQuestion.getOptionD(),
+                                mcqQuestion.getAnswerKey(),
+                                mcqQuestion.getQuestionId(),
+                                mcqQuestion.getQuestionMarks(),
+                                mcqQuestion.getQuestionTag()
                 }
         );
     }

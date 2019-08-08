@@ -6,6 +6,17 @@ public class Question {
     private String q_text;
     private int q_type_id;
     private int q_mark;
+    private String q_tag;
+
+
+    public String getQuestionTag() {
+        return q_tag;
+    }
+
+    public void setQuestionTag(String q_tag) {
+        this.q_tag = q_tag;
+    }
+
 
     public int getQuestionId() {
         return q_id;

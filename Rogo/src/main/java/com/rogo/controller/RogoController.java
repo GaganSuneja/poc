@@ -22,7 +22,7 @@ public class RogoController {
     @Autowired
     UserServiceImpl userService;
 
-    @GetMapping(path = "/getquestion/{id}")
+    @GetMapping(path = "/question/{id}")
     @ResponseBody
     public ResponseEntity<List<Question>> GetMcqQuestions(@PathVariable("id") String id) {
         return new ResponseEntity<>(questionService.getAll(id), HttpStatus.OK);

@@ -11,7 +11,7 @@ public class ResponseMap {
     private String errorMessage;
     private Boolean success;
     private String successMessage;
-    ResponseMap(){
+    public ResponseMap(){
         setSuccess(false);
         setSuccessMessage("");
         setError(false);
@@ -53,14 +53,10 @@ public class ResponseMap {
     public void setResponseSucess(String successMessage){
         setSuccess(true);
         setSuccessMessage(successMessage);
-        setError(false);
-        setErrorMessage("");
     }
     public void setResponseError(String errorMessage){
         setError(true);
         setErrorMessage(errorMessage);
-        setSuccess(false);
-        setSuccessMessage("");
     }
 }
 

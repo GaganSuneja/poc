@@ -5,31 +5,39 @@ import com.rogo.bean.ResponseMap;
 import com.rogo.bean.User;
 import com.rogo.bean.UserLogin;
 import com.rogo.service.QuestionService;
+import com.rogo.service.UserService;
 import com.rogo.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 public class RogoController {
     @Autowired
     QuestionService questionService;
     @Autowired
-    UserServiceImpl userService;
+    UserService userService;
 
-    @GetMapping(path = "/getquestion/{id}")
+    @GetMapping(path = "/question/{id}")
     @ResponseBody
-    public ResponseEntity<List<Question>> GetMcqQuestions(@PathVariable("id") String id) {
-        return new ResponseEntity<>(questionService.getAll(id), HttpStatus.OK);
+    public ResponseEntity<List<Question>> getQuestions(@PathVariable("id") int id) {
+        return new ResponseEntity<List<Question>>(questionService.getAll(id), HttpStatus.OK);
     }
 
+    @PostMapping(path="/question/")
+    public ResponseEntity addQuestion(@RequestBody LinkedHashMap question){
+        ResponseMap responseMap = questionService.addQuestion(question);
+        return new ResponseEntity(responseMap,responseMap.getError() ? HttpStatus.INTERNAL_SERVER_ERROR : HttpStatus.OK);
+    }
+
+
     @PostMapping(path = "/login")
-    public ResponseEntity<Object> login(@RequestBody UserLogin user) {
+    public ResponseEntity login(@RequestBody UserLogin user) {
         ResponseMap responseMap = userService.userLogin(user);
         return new ResponseEntity<>(responseMap, responseMap.getError() ? HttpStatus.UNAUTHORIZED : HttpStatus.OK);
     }

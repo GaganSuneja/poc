@@ -1,10 +1,12 @@
 package com.rogo.bean;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 
 
 @Component
+@Scope("prototype")
 public class ResponseMap {
 
     private Boolean error;
@@ -53,14 +55,10 @@ public class ResponseMap {
     public void setResponseSucess(String successMessage){
         setSuccess(true);
         setSuccessMessage(successMessage);
-        setError(false);
-        setErrorMessage("");
     }
     public void setResponseError(String errorMessage){
         setError(true);
         setErrorMessage(errorMessage);
-        setSuccess(false);
-        setSuccessMessage("");
     }
 }
 

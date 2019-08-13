@@ -8,5 +8,5 @@ public interface QuestionRepo<T extends Question> {
 
     List<T> getQuestion();
 
-    void addQuestion(T question);
+    int addQuestion(T question);
 }

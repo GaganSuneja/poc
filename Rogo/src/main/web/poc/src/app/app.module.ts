@@ -5,19 +5,28 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { Login2Component } from './login2/login2.component';
+import { loginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
-import { AdminpageComponent } from './adminpage/adminpage.component';
+import { HomeComponent } from './Home/Home.component';
 import { HttpModule } from '@angular/http';
-import { RestService } from './restservice.service';
+import { UserComponent } from './user/user.component';
+
+import { LoginSignupService } from './LoginSignupService.service';
+import { McquestionsComponent } from './Home/mcquestions/mcquestions.component';
+import { ModalComponent } from './modal/modal.component';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    Login2Component,
+    loginComponent,
     SignupComponent,
-    AdminpageComponent
+    HomeComponent,
+    UserComponent,
+    McquestionsComponent,
+    ModalComponent,
     
     
   ],
@@ -25,9 +34,10 @@ import { RestService } from './restservice.service';
     BrowserModule,
     AppRoutingModule,FormsModule,
     ReactiveFormsModule,
-    HttpModule
+    HttpModule,
+    NgbModalModule
   ],
-  providers: [RestService],
+  providers: [LoginSignupService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

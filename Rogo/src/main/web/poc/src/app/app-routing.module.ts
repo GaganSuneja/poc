@@ -2,14 +2,15 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SignupComponent } from './signup/signup.component';
 import { HeaderComponent } from './header/header.component';
-import { Login2Component } from './login2/login2.component';
-import { AdminpageComponent } from './adminpage/adminpage.component';
+import { loginComponent } from './login/login.component';
+import { HomeComponent } from './Home/Home.component';
+import { UserComponent } from './user/user.component';
 
 
 const routes: Routes = [
   {
-    path:'adminpage',
-    component:AdminpageComponent
+    path:'',
+    component:HomeComponent
   },
   {
     path:'signup',
@@ -19,8 +20,12 @@ const routes: Routes = [
     component:HeaderComponent
   },
   {
-    path:"",
-    component:Login2Component
+    path:"login",
+    component:loginComponent
+  },
+  {
+    path:"User",
+    component:UserComponent
   }
   
 ];

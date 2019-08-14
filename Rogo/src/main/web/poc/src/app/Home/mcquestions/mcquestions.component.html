@@ -1,0 +1,18 @@
+
+<div href="#" class="box" *ngFor="let c of quest">
+    <div class="inner">
+        <p>{{c.ques}}</p>
+        <form><ul>
+            <li *ngFor="let c1 of c.options">
+    <input type="radio" name="options" value="c1">{{c1}}
+    </li>
+    </ul>
+    <!-- <input type="radio"name="options"  value="c.options[1]">{{c.options[1]}}
+    <input type="radio" name="options" value="c.options[2]">{{c.options[2]}}
+    <input type="radio" name="options" value="c.options[3]">{{c.options[3]}} -->
+    </form>
+    <span class="pull-right">{{c.ans}}</span>
+    </div>
+</div>
+
+

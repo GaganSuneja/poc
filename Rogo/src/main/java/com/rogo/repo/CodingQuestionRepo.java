@@ -2,10 +2,9 @@ package com.rogo.repo;
 
 import com.rogo.bean.CodingQuestion;
 import com.rogo.bean.CodingQuestionRowMapper;
-import com.rogo.bean.ResponseMap;
+import com.rogo.responseClasses.ResponseMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -39,5 +38,17 @@ public class CodingQuestionRepo implements QuestionRepo<CodingQuestion> {
         });
 
         return 1;
+    }
+
+    public List<CodingQuestion> getQuestionByTag(String questionTag) {
+        List<CodingQuestion> codingQuestions = null;
+
+        String query = "select * from coding_questions where q_tag = ?";
+        try {
+            codingQuestions = jdbcTemplate.query(query,new Object[]{questionTag},new CodingQuestionRowMapper());
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+        return codingQuestions;
     }
 }

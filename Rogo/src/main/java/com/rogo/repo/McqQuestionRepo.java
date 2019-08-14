@@ -5,6 +5,7 @@ import com.rogo.bean.McqQuestionRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -53,6 +54,17 @@ public class McqQuestionRepo implements QuestionRepo<McqQuestion> {
             e.printStackTrace();
         }
         return noOfRowsAffected;
+    }
+
+    public List<McqQuestion> getQuestionByTag(String questionTag){
+        List<McqQuestion> mcqQuestions = null;
+        String query = "select * from mcq_questions where q_tag = ?";
+        try {
+            mcqQuestions = jdbcTemplate.query(query,new Object[]{questionTag},new McqQuestionRowMapper());
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+        return mcqQuestions;
     }
 
 }

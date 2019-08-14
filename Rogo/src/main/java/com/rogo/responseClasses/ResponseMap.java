@@ -1,8 +1,9 @@
-package com.rogo.bean;
+package com.rogo.responseClasses;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
+import java.util.Map;
 
 
 @Component
@@ -13,6 +14,7 @@ public class ResponseMap {
     private String errorMessage;
     private Boolean success;
     private String successMessage;
+    private Map dataMap;
     ResponseMap(){
         setSuccess(false);
         setSuccessMessage("");
@@ -32,7 +34,7 @@ public class ResponseMap {
         return errorMessage;
     }
 
-    public void setErrorMessage(String errorMessage) {
+    private void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
 
@@ -48,7 +50,7 @@ public class ResponseMap {
         return successMessage;
     }
 
-    public void setSuccessMessage(String successMessage) {
+    private void setSuccessMessage(String successMessage) {
         this.successMessage = successMessage;
     }
 

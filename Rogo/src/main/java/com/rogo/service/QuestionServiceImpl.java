@@ -3,14 +3,15 @@ package com.rogo.service;
 import com.rogo.bean.CodingQuestion;
 import com.rogo.bean.McqQuestion;
 import com.rogo.bean.Question;
+import com.rogo.config.*;
 
+import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
-import com.rogo.bean.ResponseMap;
+import com.rogo.responseClasses.ResponseDataMap;
+import com.rogo.responseClasses.ResponseMap;
 import com.rogo.repo.QuestionRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,17 +38,42 @@ public class QuestionServiceImpl implements QuestionService {
 
     public ResponseMap addQuestion(LinkedHashMap question) {
         Boolean isQuestionAdded;
-        if (question[co] == 1) {
+        int questionTypeId = (int) question.get(constants.questionTypeId.toString());
+        if (questionTypeId == 1) {
             McqQuestion mcqQuestion = new McqQuestion(question);
             isQuestionAdded = (mcqQuestionRepo.addQuestion(mcqQuestion) > 0);
             if (isQuestionAdded) {
-                responseMap.setSuccessMessage("Mcq question added successfully");
+                responseMap.setResponseSucess("Mcq question added successfully");
             } else {
-                responseMap.setErrorMessage("Mcq question could not be added");
+                responseMap.setResponseError("Mcq question could not be added");
             }
             return responseMap;
         } else {
         }
         return responseMap;
     }
+    public ResponseDataMap getQuestionByTag(String questionTag){
+        List<CodingQuestion> codingQuestions = codingQuestionRepo.getQuestionByTag(questionTag);
+        List<McqQuestion> mcqQuestions = mcqQuestionRepo.getQuestionByTag(questionTag);
+        HashMap questionsMap = new HashMap();
+        ResponseDataMap responseDataMap = new ResponseDataMap();
+        if(codingQuestions == null){
+            questionsMap.put("codingQuestions",new List[]{});
+        }else
+        {
+            questionsMap.put("codingQuestions",codingQuestions);
+        }
+        if(mcqQuestions == null){
+            questionsMap.put("mcqQuestions",new List[]{});
+        }else{
+
+            questionsMap.put("mcqQuestions",mcqQuestions);
+        }
+
+        responseDataMap.setResponseSucess("QuestionsFound");
+
+        responseDataMap.putData("questions",questionsMap);
+        return responseDataMap;
+    }
+
 }

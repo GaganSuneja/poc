@@ -1,19 +1,23 @@
 package com.rogo.controller;
 
 import com.rogo.bean.Question;
-import com.rogo.bean.ResponseMap;
+import com.rogo.responseClasses.ResponseDataMap;
+import com.rogo.responseClasses.ResponseMap;
 import com.rogo.bean.User;
 import com.rogo.bean.UserLogin;
 import com.rogo.service.QuestionService;
 import com.rogo.service.UserService;
-import com.rogo.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.AbstractClientHttpResponse;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -24,7 +28,6 @@ public class RogoController {
     UserService userService;
 
     @GetMapping(path = "/question/{id}")
-    @ResponseBody
     public ResponseEntity<List<Question>> getQuestions(@PathVariable("id") int id) {
         return new ResponseEntity<List<Question>>(questionService.getAll(id), HttpStatus.OK);
     }
@@ -42,15 +45,15 @@ public class RogoController {
         return new ResponseEntity<>(responseMap, responseMap.getError() ? HttpStatus.UNAUTHORIZED : HttpStatus.OK);
     }
 
-    @PutMapping(path = "/signup")
+    @PostMapping(path = "/signup")
     public ResponseEntity signUp(@RequestBody User newUser) {
         ResponseMap map =  userService.addUser(newUser);
         return new ResponseEntity<>(map,map.getError() ? HttpStatus.UNAUTHORIZED : HttpStatus.OK );
     }
 
-    @GetMapping("/home")
-    public ResponseEntity home() {
-        return new ResponseEntity(new Object[]{"d1", "v1"}, HttpStatus.OK);
+    @GetMapping(path="/question/tag/{questionTag}")
+    public ResponseEntity getQuestionsByTag(@PathVariable("questionTag") String questionTag){
+        ResponseDataMap questionByTagMap = questionService.getQuestionByTag(questionTag);
+        return new ResponseEntity<>(questionByTagMap,HttpStatus.OK);
     }
-
 }

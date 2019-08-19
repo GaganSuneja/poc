@@ -11,7 +11,7 @@ public class CodingQuestionRowMapper implements RowMapper<CodingQuestion> {
         CodingQuestion codingQuestion = new CodingQuestion();
         codingQuestion.setQuestionId(rs.getInt("q_id"));
         codingQuestion.setQuestionTypeId(rs.getInt("q_type_id"));
-        codingQuestion.setQuestionMarks(rs.getInt("q_mark"));
+        codingQuestion.setQuestionMark(rs.getInt("q_mark"));
         codingQuestion.setQuestionText(rs.getString("q_text"));
         if (rs.getString("q_tag").isEmpty()) {
             codingQuestion.setQuestionTag("");

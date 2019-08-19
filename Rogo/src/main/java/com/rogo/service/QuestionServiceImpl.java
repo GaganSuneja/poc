@@ -25,15 +25,25 @@ public class QuestionServiceImpl implements QuestionService {
     @Autowired
     ResponseMap responseMap;
 
-    public List<Question> getAll(int id) {
-        if (id == 1) {
-            List<Question> questions = (List<Question>) (Object) mcqQuestionRepo.getQuestion();
+    public ResponseDataMap getQuestion(Integer questionTypeId,Integer questionId) {
+        ResponseDataMap responseDataMap = new ResponseDataMap();
+        if (questionTypeId == 1) {
+            List<Question> questions = (List<Question>) (Object) mcqQuestionRepo.getQuestion(questionId);
+            if(questions!=null){
+                responseDataMap.setResponseSucess("Question Found");
+                responseDataMap.putData("questions", questions);
+            }else
+            {
+                responseDataMap.setResponseSucess("No Question Found");
+                responseDataMap.putData("questions", new List[]{});
+            }
             //  return  mcqQuestionRepo.getQuestion().stream().map(q -> (Question) q).collect(Collectors.toList());
-            return questions;
+            return responseDataMap;
         } else {
             //return  codingQuestionRepo.getQuestion().stream().map(q -> (Question) q).collect(Collectors.toList());
-            return (List) codingQuestionRepo.getQuestion();
+           // return (List) codingQuestionRepo.getQuestion(questionId);
         }
+        return responseDataMap;
     }
 
     public ResponseMap addQuestion(LinkedHashMap question) {
@@ -52,27 +62,46 @@ public class QuestionServiceImpl implements QuestionService {
         }
         return responseMap;
     }
-    public ResponseDataMap getQuestionByTag(String questionTag){
+
+    public ResponseDataMap getQuestionByTag(String questionTag) {
         List<CodingQuestion> codingQuestions = codingQuestionRepo.getQuestionByTag(questionTag);
         List<McqQuestion> mcqQuestions = mcqQuestionRepo.getQuestionByTag(questionTag);
         HashMap questionsMap = new HashMap();
         ResponseDataMap responseDataMap = new ResponseDataMap();
-        if(codingQuestions == null){
-            questionsMap.put("codingQuestions",new List[]{});
-        }else
-        {
-            questionsMap.put("codingQuestions",codingQuestions);
+        if (codingQuestions == null) {
+            questionsMap.put("codingQuestions", new List[]{});
+        } else {
+            questionsMap.put("codingQuestions", codingQuestions);
         }
-        if(mcqQuestions == null){
-            questionsMap.put("mcqQuestions",new List[]{});
-        }else{
+        if (mcqQuestions == null) {
+            questionsMap.put("mcqQuestions", new List[]{});
+        } else {
 
-            questionsMap.put("mcqQuestions",mcqQuestions);
+            questionsMap.put("mcqQuestions", mcqQuestions);
         }
 
         responseDataMap.setResponseSucess("QuestionsFound");
 
-        responseDataMap.putData("questions",questionsMap);
+        responseDataMap.putData("questions", questionsMap);
+        return responseDataMap;
+    }
+
+    public ResponseDataMap editQuestion(LinkedHashMap question) {
+        Boolean isQuestionAdded;
+        int questionTypeId = (int) question.get(constants.questionTypeId.toString());
+        ResponseDataMap responseDataMap = new ResponseDataMap();
+
+        if (questionTypeId == 1) {
+            McqQuestion mcqQuestion = new McqQuestion(question);
+            isQuestionAdded = (mcqQuestionRepo.addQuestion(mcqQuestion) > 0);
+            if (isQuestionAdded) {
+                responseDataMap.setResponseSucess("Mcq question edited successfully");
+            } else {
+                responseDataMap.setResponseError("Mcq question could not be edited");
+            }
+            return responseDataMap;
+        } else {
+        }
         return responseDataMap;
     }
 

@@ -1,6 +1,5 @@
 package com.rogo.controller;
 
-import com.rogo.bean.Question;
 import com.rogo.responseClasses.ResponseDataMap;
 import com.rogo.responseClasses.ResponseMap;
 import com.rogo.bean.User;
@@ -10,14 +9,9 @@ import com.rogo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.AbstractClientHttpResponse;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -27,17 +21,36 @@ public class RogoController {
     @Autowired
     UserService userService;
 
-    @GetMapping(path = "/question/{id}")
-    public ResponseEntity<List<Question>> getQuestions(@PathVariable("id") int id) {
-        return new ResponseEntity<List<Question>>(questionService.getAll(id), HttpStatus.OK);
+    @GetMapping(path = "/question/{questionTypeId}/{questionId}")
+    public ResponseEntity getQuestion( @PathVariable("questionTypeId") Integer questionTypeId,
+                                       @PathVariable("questionId") Integer questionId) {
+        return new ResponseEntity<>(questionService.getQuestion(questionTypeId, questionId), HttpStatus.OK);
     }
 
-    @PostMapping(path="/question/")
-    public ResponseEntity addQuestion(@RequestBody LinkedHashMap question){
+    @GetMapping(path = "/question/{questionTypeId}")
+    public ResponseEntity getQuestions( @PathVariable("questionTypeId") Integer questionTypeId) {
+        return new ResponseEntity<>(questionService.getQuestion(questionTypeId, null), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/question/tag/{questionTag}")
+    public ResponseEntity getQuestionsByTag(@PathVariable("questionTag") String questionTag) {
+        ResponseDataMap questionByTagMap = questionService.getQuestionByTag(questionTag);
+        return new ResponseEntity<>(questionByTagMap, HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/question/")
+    public ResponseEntity addQuestion(@RequestBody LinkedHashMap question) {
         ResponseMap responseMap = questionService.addQuestion(question);
-        return new ResponseEntity(responseMap,responseMap.getError() ? HttpStatus.INTERNAL_SERVER_ERROR : HttpStatus.OK);
+        return new ResponseEntity<>(responseMap, responseMap.getError() ? HttpStatus.INTERNAL_SERVER_ERROR :
+                HttpStatus.OK);
     }
 
+    @PutMapping(path = "/question/")
+    public ResponseEntity editQuestion(@RequestBody LinkedHashMap question) {
+        ResponseDataMap responseDataMap = questionService.editQuestion(question);
+        return new ResponseEntity<>(responseDataMap, responseDataMap.getError() ? HttpStatus.INTERNAL_SERVER_ERROR :
+                HttpStatus.OK);
+    }
 
     @PostMapping(path = "/login")
     public ResponseEntity login(@RequestBody UserLogin user) {
@@ -47,13 +60,9 @@ public class RogoController {
 
     @PostMapping(path = "/signup")
     public ResponseEntity signUp(@RequestBody User newUser) {
-        ResponseMap map =  userService.addUser(newUser);
-        return new ResponseEntity<>(map,map.getError() ? HttpStatus.UNAUTHORIZED : HttpStatus.OK );
+        ResponseMap map = userService.addUser(newUser);
+        return new ResponseEntity<>(map, map.getError() ? HttpStatus.UNAUTHORIZED : HttpStatus.OK);
     }
 
-    @GetMapping(path="/question/tag/{questionTag}")
-    public ResponseEntity getQuestionsByTag(@PathVariable("questionTag") String questionTag){
-        ResponseDataMap questionByTagMap = questionService.getQuestionByTag(questionTag);
-        return new ResponseEntity<>(questionByTagMap,HttpStatus.OK);
-    }
+
 }

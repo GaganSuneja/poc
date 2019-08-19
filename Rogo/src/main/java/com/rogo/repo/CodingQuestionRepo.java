@@ -3,6 +3,7 @@ package com.rogo.repo;
 import com.rogo.bean.CodingQuestion;
 import com.rogo.bean.CodingQuestionRowMapper;
 import com.rogo.responseClasses.ResponseMap;
+import io.micrometer.core.lang.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -16,8 +17,9 @@ public class CodingQuestionRepo implements QuestionRepo<CodingQuestion> {
     JdbcTemplate jdbcTemplate;
     @Autowired
     ResponseMap responseMap;
+
     @Override
-    public List<CodingQuestion> getQuestion() {
+    public List<CodingQuestion> getQuestion(@Nullable Integer questionId) {
         List<CodingQuestion> codingQuestions = null;
 
         try {
@@ -34,7 +36,7 @@ public class CodingQuestionRepo implements QuestionRepo<CodingQuestion> {
     @Override
     public int addQuestion(CodingQuestion question) {
         jdbcTemplate.update("insert into coding_question (q_text,q_mark) values(?,?)", new Object[]{
-                question.getQuestionText(), question.getQuestionMarks()
+                question.getQuestionText(), question.getQuestionMark()
         });
 
         return 1;
@@ -45,7 +47,7 @@ public class CodingQuestionRepo implements QuestionRepo<CodingQuestion> {
 
         String query = "select * from coding_questions where q_tag = ?";
         try {
-            codingQuestions = jdbcTemplate.query(query,new Object[]{questionTag},new CodingQuestionRowMapper());
+            codingQuestions = jdbcTemplate.query(query, new Object[]{questionTag}, new CodingQuestionRowMapper());
         } catch (DataAccessException e) {
             e.printStackTrace();
         }

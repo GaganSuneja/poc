@@ -8,10 +8,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 public interface QuestionService {
-    public List<Question> getAll(int id);
+    public ResponseDataMap getQuestion(Integer questionTypeId,Integer questionId);
 
     public ResponseMap addQuestion(LinkedHashMap question);
 
     public ResponseDataMap getQuestionByTag(String questionTag);
+
+    public ResponseDataMap editQuestion(LinkedHashMap question);
 
 }

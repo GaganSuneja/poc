@@ -1,13 +1,5 @@
 package com.rogo.bean;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
-//@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-//@JsonSubTypes({
-//        @JsonSubTypes.Type(value = McqQuestion.class, name = "mcq"),
-//        @JsonSubTypes.Type(value = CodingQuestion.class, name = "coding")
-//})
 public class Question {
     private int questionId;
     private int questionTypeId;
@@ -56,11 +48,11 @@ public class Question {
         this.questionTypeId = questionTypeId;
     }
 
-    public int getQuestionMarks() {
+    public int getQuestionMark() {
         return questionMark;
     }
 
-    public void setQuestionMarks(int questionMark) {
+    public void setQuestionMark(int questionMark) {
         this.questionMark = questionMark;
     }
 }

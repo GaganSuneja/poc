@@ -2,7 +2,6 @@ package com.rogo.bean;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import javax.management.MXBean;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -12,7 +11,7 @@ public class McqQuestionRowMapper implements RowMapper<McqQuestion> {
         McqQuestion mcqQuestion = new McqQuestion();
         mcqQuestion.setQuestionId(rs.getInt("q_id"));
         mcqQuestion.setQuestionTypeId(rs.getInt("q_type_id"));
-        mcqQuestion.setQuestionMarks(rs.getInt("q_mark"));
+        mcqQuestion.setQuestionMark(rs.getInt("q_mark"));
         mcqQuestion.setQuestionText(rs.getString("q_text"));
         mcqQuestion.setOptionA(rs.getString("option_a"));
         mcqQuestion.setOptionB(rs.getString("option_b"));

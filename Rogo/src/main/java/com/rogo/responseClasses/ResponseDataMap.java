@@ -13,7 +13,6 @@ public class ResponseDataMap extends  ResponseMap{
         this.data = data;
     }
 
-
     public ResponseDataMap() {
         data = new HashMap<>();
     }

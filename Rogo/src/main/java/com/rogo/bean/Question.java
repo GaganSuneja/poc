@@ -1,53 +1,59 @@
 package com.rogo.bean;
 
 public class Question {
+    private int questionId;
+    private int questionTypeId;
+    private int questionMark;
 
-    private int q_id;
-    private String q_text;
-    private int q_type_id;
-    private int q_mark;
-    private String q_tag;
+    private String questionTag;
+    private String questionText;
 
+    Question(){}
+
+    Question(int questionMark, String questionTag, String questionText) {
+        this.questionMark = questionMark;
+        this.questionTag = questionTag;
+        this.questionText = questionText;
+    }
 
     public String getQuestionTag() {
-        return q_tag;
+        return questionTag;
     }
 
-    public void setQuestionTag(String q_tag) {
-        this.q_tag = q_tag;
+    public void setQuestionTag(String questionTag) {
+        this.questionTag = questionTag;
     }
-
 
     public int getQuestionId() {
-        return q_id;
+        return questionId;
     }
 
-    public void setQuestionId(int q_id) {
-        this.q_id = q_id;
+    public void setQuestionId(int questionId) {
+        this.questionId = questionId;
     }
 
     public String getQuestionText() {
-        return q_text;
+        return questionText;
     }
 
-    public void setQuestionText(String q_text) {
-        this.q_text = q_text;
+    public void setQuestionText(String questionText) {
+        this.questionText = questionText;
     }
 
     public int getQuestionTypeId() {
-        return q_type_id;
+        return questionTypeId;
     }
 
-    public void setQuestionTypeId(int q_type_id) {
-        this.q_type_id = q_type_id;
+    public void setQuestionTypeId(int questionTypeId) {
+        this.questionTypeId = questionTypeId;
     }
 
-    public int getQuestionMarks() {
-        return q_mark;
+    public int getQuestionMark() {
+        return questionMark;
     }
 
-    public void setQuestionMarks(int q_mark) {
-        this.q_mark = q_mark;
+    public void setQuestionMark(int questionMark) {
+        this.questionMark = questionMark;
     }
 }
 

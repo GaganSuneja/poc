@@ -15,7 +15,7 @@ public class ResponseMap {
     private Boolean success;
     private String successMessage;
     private Map dataMap;
-    ResponseMap(){
+    public ResponseMap(){
         setSuccess(false);
         setSuccessMessage("");
         setError(false);

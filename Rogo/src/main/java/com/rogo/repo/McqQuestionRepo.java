@@ -5,6 +5,7 @@ import com.rogo.bean.McqQuestionRowMapper;
 import io.micrometer.core.lang.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -35,12 +36,10 @@ public class McqQuestionRepo implements QuestionRepo<McqQuestion> {
 
     public McqQuestion getQuestion(@Nullable Integer questionId){
         McqQuestion mcqQuestion = null;
-        try {
+
             mcqQuestion = jdbcTemplate.queryForObject("select * from mcq_questions where q_id = ?", new McqQuestionRowMapper()
                     , new Object[]{questionId});
-        } catch (DataAccessException e) {
-            e.printStackTrace();
-        }
+
 
         return mcqQuestion;
     }

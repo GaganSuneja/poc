@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import com.rogo.exceptions.NotFoundException;
+//import com.rogo.exceptions.NotFoundException;
 import com.rogo.responseClasses.ResponseDataMap;
 import com.rogo.responseClasses.ResponseMap;
 import com.rogo.repo.QuestionRepo;
@@ -23,8 +23,6 @@ public class QuestionServiceImpl implements QuestionService {
     QuestionRepo<McqQuestion> mcqQuestionRepo;
     @Autowired
     QuestionRepo<CodingQuestion> codingQuestionRepo;
-    @Autowired
-    ResponseMap responseMap;
 
     public ResponseDataMap getQuestion(Integer questionTypeId,Integer questionId){
         ResponseDataMap responseDataMap = new ResponseDataMap();
@@ -52,14 +50,14 @@ public class QuestionServiceImpl implements QuestionService {
         ResponseDataMap responseDataMap = new ResponseDataMap();
         if (questionTypeId == 1) {
 
-            try{
-                List<Question> questions = (List<Question>) (Object) mcqQuestionRepo.getQuestions();
-                if(questions == null){
-                    throw new NotFoundException("Question Not Found");
-                }
-            }catch (NotFoundException nfe){
-                    nfe.printStackTrace();
-            }
+//            try{
+//                List<Question> questions = (List<Question>) (Object) mcqQuestionRepo.getQuestions();
+//                if(questions == null){
+//                    throw new NotFoundException("Question Not Found");
+//                }
+//            }catch (NotFoundException nfe){
+//                    nfe.printStackTrace();
+//            }
 
 //            if(questions!=null){
 //                responseDataMap.setResponseSucess("Question Found");
@@ -80,6 +78,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     public ResponseMap addQuestion(LinkedHashMap question) {
         Boolean isQuestionAdded;
+        ResponseMap responseMap = new ResponseMap();
         int questionTypeId = (int) question.get(constants.questionTypeId.toString());
         if (questionTypeId == 1) {
             McqQuestion mcqQuestion = new McqQuestion(question);

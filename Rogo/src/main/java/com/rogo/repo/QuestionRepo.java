@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface QuestionRepo<T extends Question> {
 
-    List<T> getQuestion(@Nullable Integer id);
+    List<T> getQuestions();
+
+    Question getQuestion(@Nullable Integer id);
 
     int addQuestion(T question);
 

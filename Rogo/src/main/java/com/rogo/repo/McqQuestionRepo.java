@@ -22,25 +22,29 @@ public class McqQuestionRepo implements QuestionRepo<McqQuestion> {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public List<McqQuestion> getQuestion(@Nullable Integer questionId) {
+    public List<McqQuestion> getQuestions() {
         List<McqQuestion> mcqQuestions = null;
-        if (questionId == null) {
             try {
                 mcqQuestions = jdbcTemplate.query("select * from mcq_questions", new McqQuestionRowMapper());
             } catch (DataAccessException e) {
                 e.printStackTrace();
             }
-        } else {
-            try {
-                mcqQuestions = jdbcTemplate.query("select * from mcq_questions where q_id=?", new Object[]{questionId},
-                        new McqQuestionRowMapper());
-            } catch (DataAccessException e) {
-                e.printStackTrace();
-            }
-        }
 
         return mcqQuestions;
     }
+
+    public McqQuestion getQuestion(@Nullable Integer questionId){
+        McqQuestion mcqQuestion = null;
+        try {
+            mcqQuestion = jdbcTemplate.queryForObject("select * from mcq_questions where q_id = ?", new McqQuestionRowMapper()
+                    , new Object[]{questionId});
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+
+        return mcqQuestion;
+    }
+
 
     public int addQuestion(McqQuestion mcqQuestion) {
         int noOfRowsAffected = -1;

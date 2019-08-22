@@ -5,15 +5,16 @@ import com.rogo.bean.McqQuestion;
 import com.rogo.bean.Question;
 import com.rogo.config.*;
 
-import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import com.rogo.exceptions.NotFoundException;
 import com.rogo.responseClasses.ResponseDataMap;
 import com.rogo.responseClasses.ResponseMap;
 import com.rogo.repo.QuestionRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,18 +26,49 @@ public class QuestionServiceImpl implements QuestionService {
     @Autowired
     ResponseMap responseMap;
 
-    public ResponseDataMap getQuestion(Integer questionTypeId,Integer questionId) {
+    public ResponseDataMap getQuestion(Integer questionTypeId,Integer questionId){
+        ResponseDataMap responseDataMap = new ResponseDataMap();
+
+        if(questionTypeId == 1){
+            Question mcqQuestion = null;
+            try{
+                mcqQuestion = mcqQuestionRepo.getQuestion(questionId);
+            }catch(DataAccessException e){
+                e.printStackTrace();
+            }
+        }else{
+            Question codingQuestion = null;
+            try{
+                codingQuestion = codingQuestionRepo.getQuestion(questionId);
+            }catch(DataAccessException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return responseDataMap;
+
+    }
+    public ResponseDataMap getQuestions(Integer questionTypeId) {
         ResponseDataMap responseDataMap = new ResponseDataMap();
         if (questionTypeId == 1) {
-            List<Question> questions = (List<Question>) (Object) mcqQuestionRepo.getQuestion(questionId);
-            if(questions!=null){
-                responseDataMap.setResponseSucess("Question Found");
-                responseDataMap.putData("questions", questions);
-            }else
-            {
-                responseDataMap.setResponseSucess("No Question Found");
-                responseDataMap.putData("questions", new List[]{});
+
+            try{
+                List<Question> questions = (List<Question>) (Object) mcqQuestionRepo.getQuestions();
+                if(questions == null){
+                    throw new NotFoundException("Question Not Found");
+                }
+            }catch (NotFoundException nfe){
+                    nfe.printStackTrace();
             }
+
+//            if(questions!=null){
+//                responseDataMap.setResponseSucess("Question Found");
+//                responseDataMap.putData("questions", questions);
+//            }else
+//            {
+//                responseDataMap.setResponseSucess("No Question Found");
+//                responseDataMap.putData("questions", new List[]{});
+//            }
             //  return  mcqQuestionRepo.getQuestion().stream().map(q -> (Question) q).collect(Collectors.toList());
             return responseDataMap;
         } else {

@@ -29,7 +29,7 @@ public class RogoController {
 
     @GetMapping(path = "/question/{questionTypeId}")
     public ResponseEntity getQuestions( @PathVariable("questionTypeId") Integer questionTypeId) {
-        return new ResponseEntity<>(questionService.getQuestion(questionTypeId, null), HttpStatus.OK);
+        return new ResponseEntity<>(questionService.getQuestions(questionTypeId), HttpStatus.OK);
     }
 
     @GetMapping(path = "/question/tag/{questionTag}")

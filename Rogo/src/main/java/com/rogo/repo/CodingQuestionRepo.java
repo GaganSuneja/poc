@@ -18,8 +18,7 @@ public class CodingQuestionRepo implements QuestionRepo<CodingQuestion> {
     @Autowired
     ResponseMap responseMap;
 
-    @Override
-    public List<CodingQuestion> getQuestion(@Nullable Integer questionId) {
+    public List<CodingQuestion> getQuestions() {
         List<CodingQuestion> codingQuestions = null;
 
         try {
@@ -52,5 +51,17 @@ public class CodingQuestionRepo implements QuestionRepo<CodingQuestion> {
             e.printStackTrace();
         }
         return codingQuestions;
+    }
+
+    public CodingQuestion getQuestion(@Nullable Integer questionId){
+        CodingQuestion mcqQuestion = null;
+//        try {
+//            mcqQuestion = jdbcTemplate.queryForObject("select * from mcq_questions where q_id = ?", new CodingQuestion()
+//                    , new Object[]{questionId});
+//        } catch (DataAccessException e) {
+//            e.printStackTrace();
+//        }
+
+        return mcqQuestion;
     }
 }

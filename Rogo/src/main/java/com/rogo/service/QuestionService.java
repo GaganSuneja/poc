@@ -1,6 +1,7 @@
 package com.rogo.service;
 
 import com.rogo.bean.Question;
+import com.rogo.exception.RogoCustomException;
 import com.rogo.responseClasses.ResponseDataMap;
 import com.rogo.responseClasses.ResponseMap;
 
@@ -16,7 +17,7 @@ public interface QuestionService {
 
     public ResponseMap editQuestion(LinkedHashMap question);
 
-    public ResponseMap getQuestion(Integer questionTypeId,Integer questionId);
+    public ResponseMap getQuestion(Integer questionTypeId,Integer questionId) throws RogoCustomException;
 
     public ResponseMap deleteQuestion(Integer questionTypeId,Integer questionId);
 }

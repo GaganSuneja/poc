@@ -66,4 +66,6 @@ public class CodingQuestionRepo implements QuestionRepo<CodingQuestion> {
     public int updateQuestion(CodingQuestion question){
         return 1;
     }
+
+    public int deleteQuestion(Integer questionId){return 1;}
 }

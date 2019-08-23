@@ -1,4 +1,5 @@
 package com.rogo.responseClasses;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -9,8 +10,8 @@ import java.util.Map;
 public class ResponseMap {
 
     private String message;
+    @JsonIgnore
     private HttpStatus status;
-
 
     public HttpStatus getStatus() {
         return status;

@@ -3,10 +3,12 @@ package com.rogo.repo;
 import com.rogo.bean.CodingQuestion;
 import com.rogo.bean.McqQuestion;
 import com.rogo.bean.McqQuestionRowMapper;
+import com.rogo.exception.RogoCustomException;
 import io.micrometer.core.lang.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -35,12 +37,14 @@ public class McqQuestionRepo implements QuestionRepo<McqQuestion> {
         return mcqQuestions;
     }
 
-    public McqQuestion getQuestion(@Nullable Integer questionId) {
+    public McqQuestion getQuestion(@Nullable Integer questionId) throws RogoCustomException{
         McqQuestion mcqQuestion = null;
-
-        mcqQuestion = jdbcTemplate.queryForObject("select * from mcq_questions where q_id = ?", new McqQuestionRowMapper()
-                , new Object[]{questionId});
-
+        try {
+            mcqQuestion = jdbcTemplate.queryForObject("select * from mcq_questions where q_id = ?", new McqQuestionRowMapper()
+                    , new Object[]{questionId});
+        }catch(EmptyResultDataAccessException e){
+            throw new RogoCustomException(HttpStatus.NOT_FOUND,"resource not found");
+        }
 
         return mcqQuestion;
     }
@@ -100,6 +104,17 @@ public class McqQuestionRepo implements QuestionRepo<McqQuestion> {
             e.printStackTrace();
         }
         return mcqQuestions;
+    }
+
+    public int deleteQuestion(Integer questionId){
+        int noOfRowsAffected = -1;
+
+        noOfRowsAffected = jdbcTemplate.update("delete from mcq_questions where q_id = ?",
+                new Object[]{questionId}
+        );
+
+        return noOfRowsAffected;
+
     }
 
 }

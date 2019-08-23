@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 //import com.rogo.exceptions.NotFoundException;
 import com.rogo.exception.ApiError;
+import com.rogo.exception.RogoCustomException;
 import com.rogo.responseClasses.ResponseDataMap;
 import com.rogo.responseClasses.ResponseMap;
 import com.rogo.repo.QuestionRepo;
@@ -28,7 +29,7 @@ public class QuestionServiceImpl implements QuestionService {
     @Autowired
     QuestionRepo<CodingQuestion> codingQuestionRepo;
 
-    public ResponseMap getQuestion(Integer questionTypeId, Integer questionId) {
+    public ResponseMap getQuestion(Integer questionTypeId, Integer questionId) throws RogoCustomException {
         ResponseDataMap responseDataMap = new ResponseDataMap();
 
         if (questionTypeId == 1) {
@@ -37,12 +38,8 @@ public class QuestionServiceImpl implements QuestionService {
             responseDataMap.putData("question", mcqQuestion);
         } else {
             Question codingQuestion = null;
-            try {
                 codingQuestion = codingQuestionRepo.getQuestion(questionId);
                 responseDataMap.putData("question", codingQuestion);
-            } catch (DataAccessException e) {
-                e.printStackTrace();
-            }
         }
         return responseDataMap;
 
@@ -52,11 +49,7 @@ public class QuestionServiceImpl implements QuestionService {
         ResponseDataMap responseDataMap = new ResponseDataMap();
         if (questionTypeId == 1) {
             List<Question> questions = (List<Question>) (Object) mcqQuestionRepo.getQuestions();
-            if (questions != null) {
-                responseDataMap.putData("questions", questions);
-            } else {
-                responseDataMap.putData("questions", new List[]{});
-            }
+            responseDataMap.putData("questions",(questions == null)?new List[]{}:questions);
             return responseDataMap;
         } else {
             //return  codingQuestionRepo.getQuestion().stream().map(q -> (Question) q).collect(Collectors.toList());
@@ -66,13 +59,11 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     public ResponseMap addQuestion(LinkedHashMap question) {
-        Boolean isQuestionAdded;
         ResponseMap responseMap = new ResponseMap();
         int questionTypeId = (int) question.get(constants.questionTypeId.toString());
         if (questionTypeId == 1) {
             McqQuestion mcqQuestion = new McqQuestion(question);
-            isQuestionAdded = (mcqQuestionRepo.addQuestion(mcqQuestion) > 0);
-            if (isQuestionAdded) {
+            if ((mcqQuestionRepo.addQuestion(mcqQuestion) > 0)) {
                 responseMap.setMessage("Mcq question added successfully");
             } else {
 
@@ -86,37 +77,29 @@ public class QuestionServiceImpl implements QuestionService {
     public ResponseMap getQuestionByTag(String questionTag) {
         List<CodingQuestion> codingQuestions = codingQuestionRepo.getQuestionByTag(questionTag);
         List<McqQuestion> mcqQuestions = mcqQuestionRepo.getQuestionByTag(questionTag);
+
         HashMap questionsMap = new HashMap();
+
         ResponseDataMap responseDataMap = new ResponseDataMap();
-        if (codingQuestions == null) {
-            questionsMap.put("codingQuestions", new List[]{});
-        } else {
-            questionsMap.put("codingQuestions", codingQuestions);
-        }
-        if (mcqQuestions == null) {
-            questionsMap.put("mcqQuestions", new List[]{});
-        } else {
 
-            questionsMap.put("mcqQuestions", mcqQuestions);
-        }
+        questionsMap.put("codingQuestions", (codingQuestions == null) ? new List[]{} : codingQuestions);
+        questionsMap.put("mcqQuestions", (mcqQuestions == null) ? new List[]{} : mcqQuestions);
 
-        responseDataMap.setMessage("QuestionsFound");
         responseDataMap.setStatus(HttpStatus.OK);
+        responseDataMap.setMessage("QuestionsFound");
         responseDataMap.putData("questions", questionsMap);
+
         return responseDataMap;
     }
 
     public ResponseMap editQuestion(LinkedHashMap question) {
-        Boolean isQuestionAdded;
         int questionTypeId = (int) question.get(constants.questionTypeId.toString());
         ResponseMap responseMap = new ResponseMap();
-
         if (questionTypeId == 1) {
             McqQuestion mcqQuestion = new McqQuestion(question, true);
-            isQuestionAdded = (mcqQuestionRepo.updateQuestion(mcqQuestion) > 0);
-            if (isQuestionAdded) {
-                responseMap.setMessage("Mcq question edited successfully");
+            if ((mcqQuestionRepo.updateQuestion(mcqQuestion) > 0)) {
                 responseMap.setStatus(HttpStatus.OK);
+                responseMap.setMessage("Mcq question edited successfully");
                 return responseMap;
             } else {
                 ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
@@ -129,4 +112,21 @@ public class QuestionServiceImpl implements QuestionService {
 
     }
 
+    @Override
+    public ResponseMap deleteQuestion(Integer questionTypeId, Integer questionId) {
+        ResponseMap responseMap = new ResponseMap();
+        if(questionTypeId==1) {
+            if (mcqQuestionRepo.deleteQuestion(questionId) > 0) {
+                responseMap.setMessage("question deleted");
+                responseMap.setStatus(HttpStatus.OK);
+                return responseMap;
+            } else {
+                ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
+                apiError.setMessage("Question Not Found");
+                return apiError;
+            }
+        }else{
+            return  responseMap;
+        }
+    }
 }

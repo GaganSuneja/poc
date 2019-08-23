@@ -43,6 +43,11 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return buildResponseEntity(apiError);
     }
 
-
-
+    @ExceptionHandler(RogoCustomException.class)
+    protected  ResponseEntity handleRogoCustomException(RogoCustomException ex){
+        ApiError apiError = new ApiError(ex.getStatus());
+        apiError.setMessage(ex.getMessage());
+        return buildResponseEntity(apiError);
+    }
 }
+

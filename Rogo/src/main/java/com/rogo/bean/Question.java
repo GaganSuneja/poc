@@ -16,6 +16,16 @@ public class Question {
         this.questionText = questionText;
     }
 
+    Question(int questionMark, String questionTag, String questionText,
+             int questionId,int questionTypeId) {
+        this.questionMark = questionMark;
+        this.questionTag = questionTag;
+        this.questionText = questionText;
+        this.questionTypeId = questionTypeId;
+        this.questionId= questionId;
+
+    }
+
     public String getQuestionTag() {
         return questionTag;
     }

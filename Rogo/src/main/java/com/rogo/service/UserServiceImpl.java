@@ -12,32 +12,35 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserRepo userRepo;
-    @Autowired
-    ResponseMap responseMap;
+
     public ResponseMap userLogin(UserLogin userLoginObj) {
         User user = userRepo.getUserByUsername(userLoginObj.getUsername());
+        ResponseMap responseMap = new ResponseMap();
         if (user != null) {
             if (user.getUserPassword().compareTo(userLoginObj.getPassword()) == 0) {
-               responseMap.setResponseSucess("Login Succesfull");
+               responseMap.setMessage("Login Succesfull");
             } else {
-               responseMap.setResponseError("Password do not match");
+               responseMap.setMessage("Password do not match");
             }
             return responseMap;
         }
-        responseMap.setResponseError("User not found!");
+        responseMap.setMessage("User not found!");
         return responseMap;
 
     }
 
     public ResponseMap addUser(User newUser) {
         int rowsAffected = userRepo.addUser(newUser);
+        ResponseMap responseMap = new ResponseMap();
         boolean isUserAdded = (rowsAffected > 0);
         if (isUserAdded) {
-            responseMap.setResponseSucess("user added successfully");
+            responseMap.setMessage("user added successfully");
         } else {
-            responseMap.setResponseError("user could not be added");
+            responseMap.setMessage("user could not be added");
         }
         return responseMap;
     }
+
+
 
 }

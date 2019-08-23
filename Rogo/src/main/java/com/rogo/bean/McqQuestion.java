@@ -35,6 +35,24 @@ public class McqQuestion extends Question {
 
     }
 
+    public McqQuestion(LinkedHashMap map,Boolean isUpdate){
+        super(  (int)map.get(constants.questionMark.toString()),
+                map.get(constants.questionTag.toString()).toString(),
+                map.get(constants.questionText.toString()).toString(),
+                (int) map.get(constants.questionId.toString()),
+                (int) map.get(constants.questionTypeId.toString()));
+
+        setOptionsAndAnswerKey(
+                map.get(constants.optionA.toString()).toString(),
+                map.get(constants.optionB.toString()).toString(),
+                map.get(constants.optionC.toString()).toString(),
+                map.get(constants.optionD.toString()).toString(),
+                (int) map.get(constants.answerKey.toString())
+        );
+
+    }
+
+
     public void setOptionsAndAnswerKey(String optionA, String optionB, String optionC, String optionD, int answerKey){
         this.optionA = optionA;
         this.optionB = optionB;

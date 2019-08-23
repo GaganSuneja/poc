@@ -15,5 +15,6 @@ public interface QuestionRepo<T extends Question> {
 
     List<T> getQuestionByTag(String questionTag);
 
+    int updateQuestion(T question);
 
 }

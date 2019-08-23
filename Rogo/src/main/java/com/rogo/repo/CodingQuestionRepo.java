@@ -15,8 +15,6 @@ import java.util.List;
 public class CodingQuestionRepo implements QuestionRepo<CodingQuestion> {
     @Autowired
     JdbcTemplate jdbcTemplate;
-    @Autowired
-    ResponseMap responseMap;
 
     public List<CodingQuestion> getQuestions() {
         List<CodingQuestion> codingQuestions = null;
@@ -63,5 +61,9 @@ public class CodingQuestionRepo implements QuestionRepo<CodingQuestion> {
 //        }
 
         return mcqQuestion;
+    }
+
+    public int updateQuestion(CodingQuestion question){
+        return 1;
     }
 }

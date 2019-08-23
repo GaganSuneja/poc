@@ -1,5 +1,6 @@
 package com.rogo.controller;
 
+import com.rogo.exception.ApiError;
 import com.rogo.responseClasses.ResponseDataMap;
 import com.rogo.responseClasses.ResponseMap;
 import com.rogo.bean.User;
@@ -34,35 +35,44 @@ public class RogoController {
 
     @GetMapping(path = "/question/tag/{questionTag}")
     public ResponseEntity getQuestionsByTag(@PathVariable("questionTag") String questionTag) {
-        ResponseDataMap questionByTagMap = questionService.getQuestionByTag(questionTag);
-        return new ResponseEntity<>(questionByTagMap, HttpStatus.OK);
+        ResponseMap questionByTagMap = questionService.getQuestionByTag(questionTag);
+        return new ResponseEntity<>(questionByTagMap,questionByTagMap.getStatus());
     }
 
-    @PostMapping(path = "/question/")
-    public ResponseEntity addQuestion(@RequestBody LinkedHashMap question) {
-        ResponseMap responseMap = questionService.addQuestion(question);
-        return new ResponseEntity<>(responseMap, responseMap.getError() ? HttpStatus.INTERNAL_SERVER_ERROR :
-                HttpStatus.OK);
-    }
+//    @PostMapping(path = "/question/")
+//    public ResponseEntity addQuestion(@RequestBody LinkedHashMap question) {
+//        ResponseMap responseMap = questionService.addQuestion(question);
+//        return new ResponseEntity<>(responseMap, responseMap.getError() ? HttpStatus.INTERNAL_SERVER_ERROR :
+//                HttpStatus.OK);
+//    }
 
     @PutMapping(path = "/question/")
     public ResponseEntity editQuestion(@RequestBody LinkedHashMap question) {
-        ResponseDataMap responseDataMap = questionService.editQuestion(question);
-        return new ResponseEntity<>(responseDataMap, responseDataMap.getError() ? HttpStatus.INTERNAL_SERVER_ERROR :
-                HttpStatus.OK);
+        ResponseMap response = questionService.editQuestion(question);
+
+//        if(response instanceof ApiError) {
+//            ApiError apiError = (ApiError) response;
+//            return new ResponseEntity(apiError, apiError.getStatus());
+//        }
+//        else{
+//            ResponseMap responseMap = (ResponseMap) response;
+//            return new ResponseEntity(responseMap, responseMap.getStatus());
+//        }
+        return new ResponseEntity(response,response.getStatus());
     }
 
     @PostMapping(path = "/login")
     public ResponseEntity login(@RequestBody UserLogin user) {
         ResponseMap responseMap = userService.userLogin(user);
-        return new ResponseEntity<>(responseMap, responseMap.getError() ? HttpStatus.UNAUTHORIZED : HttpStatus.OK);
+        return new ResponseEntity<>(responseMap, responseMap.getStatus());
     }
 
     @PostMapping(path = "/signup")
     public ResponseEntity signUp(@RequestBody User newUser) {
         ResponseMap map = userService.addUser(newUser);
-        return new ResponseEntity<>(map, map.getError() ? HttpStatus.UNAUTHORIZED : HttpStatus.OK);
+        return new ResponseEntity<>(map, map.getStatus());
     }
+
 
 
 }

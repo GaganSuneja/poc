@@ -1,17 +1,16 @@
 package com.rogo.exception;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.rogo.responseClasses.ResponseMap;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-class ApiError {
+public class ApiError extends ResponseMap {
 
-    private HttpStatus status;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     private LocalDateTime timestamp;
-    private String message;
     private String debugMessage;
     private List<ApiSubError> subErrors;
 
@@ -19,17 +18,17 @@ class ApiError {
         timestamp = LocalDateTime.now();
     }
 
-    ApiError(HttpStatus status) {
+    public ApiError(HttpStatus status) {
         this();
-        this.status = status;
+        super.setStatus(status);
     }
 
     public HttpStatus getStatus() {
-        return status;
+        return super.getStatus();
     }
 
     public void setStatus(HttpStatus status) {
-        this.status = status;
+        super.setStatus(status);
     }
 
     public LocalDateTime getTimestamp() {
@@ -41,11 +40,11 @@ class ApiError {
     }
 
     public String getMessage() {
-        return message;
+        return super.getMessage();
     }
 
     public void setMessage(String message) {
-        this.message = message;
+        super.setMessage(message);
     }
 
     public String getDebugMessage() {
@@ -66,15 +65,15 @@ class ApiError {
 
     ApiError(HttpStatus status, Throwable ex) {
         this();
-        this.status = status;
-        this.message = "Unexpected error";
+        super.setStatus(status);
+        super.setMessage("Unexpected error");
         this.debugMessage = ex.getLocalizedMessage();
     }
 
     ApiError(HttpStatus status, String message, Throwable ex) {
         this();
-        this.status = status;
-        this.message = message;
+        super.setStatus(status);
+        super.setMessage(message);
         this.debugMessage = ex.getLocalizedMessage();
     }
 }

@@ -14,6 +14,7 @@ public class ResponseDataMap extends  ResponseMap{
     }
 
     public ResponseDataMap() {
+        super();
         data = new HashMap<>();
     }
 

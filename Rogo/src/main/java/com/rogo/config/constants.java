@@ -9,6 +9,7 @@ public enum constants {
     questionMark,
     questionTag,
     questionText,
-    questionTypeId
+    questionTypeId,
+    questionId
 
 }

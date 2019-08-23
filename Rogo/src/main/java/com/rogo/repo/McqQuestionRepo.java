@@ -1,5 +1,6 @@
 package com.rogo.repo;
 
+import com.rogo.bean.CodingQuestion;
 import com.rogo.bean.McqQuestion;
 import com.rogo.bean.McqQuestionRowMapper;
 import io.micrometer.core.lang.Nullable;
@@ -25,25 +26,24 @@ public class McqQuestionRepo implements QuestionRepo<McqQuestion> {
 
     public List<McqQuestion> getQuestions() {
         List<McqQuestion> mcqQuestions = null;
-            try {
-                mcqQuestions = jdbcTemplate.query("select * from mcq_questions", new McqQuestionRowMapper());
-            } catch (DataAccessException e) {
-                e.printStackTrace();
-            }
+        try {
+            mcqQuestions = jdbcTemplate.query("select * from mcq_questions", new McqQuestionRowMapper());
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
 
         return mcqQuestions;
     }
 
-    public McqQuestion getQuestion(@Nullable Integer questionId){
+    public McqQuestion getQuestion(@Nullable Integer questionId) {
         McqQuestion mcqQuestion = null;
 
-            mcqQuestion = jdbcTemplate.queryForObject("select * from mcq_questions where q_id = ?", new McqQuestionRowMapper()
-                    , new Object[]{questionId});
+        mcqQuestion = jdbcTemplate.queryForObject("select * from mcq_questions where q_id = ?", new McqQuestionRowMapper()
+                , new Object[]{questionId});
 
 
         return mcqQuestion;
     }
-
 
     public int addQuestion(McqQuestion mcqQuestion) {
         int noOfRowsAffected = -1;
@@ -65,6 +65,29 @@ public class McqQuestionRepo implements QuestionRepo<McqQuestion> {
         } catch (DataAccessException e) {
             e.printStackTrace();
         }
+        return noOfRowsAffected;
+    }
+
+    public int updateQuestion(McqQuestion mcqQuestion) {
+
+        int noOfRowsAffected = -1;
+
+        noOfRowsAffected = jdbcTemplate.update("update mcq_questions set q_text = ?," +
+                        "option_a = ?,option_b=?,option_c=?,option_d=?,answer_key=?,q_mark=?,q_tag=?" +
+                        "where q_id = ?",
+                new Object[]{
+                        mcqQuestion.getQuestionText(),
+                        mcqQuestion.getOptionA(),
+                        mcqQuestion.getOptionB(),
+                        mcqQuestion.getoptionC(),
+                        mcqQuestion.getOptionD(),
+                        mcqQuestion.getAnswerKey(),
+                        mcqQuestion.getQuestionMark(),
+                        mcqQuestion.getQuestionTag(),
+                        mcqQuestion.getQuestionId()
+                }
+        );
+
         return noOfRowsAffected;
     }
 

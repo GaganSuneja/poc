@@ -8,13 +8,17 @@ import com.rogo.config.*;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 //import com.rogo.exceptions.NotFoundException;
+import com.rogo.exception.ApiError;
 import com.rogo.responseClasses.ResponseDataMap;
 import com.rogo.responseClasses.ResponseMap;
 import com.rogo.repo.QuestionRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,54 +28,39 @@ public class QuestionServiceImpl implements QuestionService {
     @Autowired
     QuestionRepo<CodingQuestion> codingQuestionRepo;
 
-    public ResponseDataMap getQuestion(Integer questionTypeId,Integer questionId){
+    public ResponseMap getQuestion(Integer questionTypeId, Integer questionId) {
         ResponseDataMap responseDataMap = new ResponseDataMap();
 
-        if(questionTypeId == 1){
+        if (questionTypeId == 1) {
             Question mcqQuestion = null;
-            try{
-                mcqQuestion = mcqQuestionRepo.getQuestion(questionId);
-            }catch(DataAccessException e){
-                e.printStackTrace();
-            }
-        }else{
+            mcqQuestion = mcqQuestionRepo.getQuestion(questionId);
+            responseDataMap.putData("question", mcqQuestion);
+        } else {
             Question codingQuestion = null;
-            try{
+            try {
                 codingQuestion = codingQuestionRepo.getQuestion(questionId);
-            }catch(DataAccessException e) {
+                responseDataMap.putData("question", codingQuestion);
+            } catch (DataAccessException e) {
                 e.printStackTrace();
             }
         }
-
         return responseDataMap;
 
     }
-    public ResponseDataMap getQuestions(Integer questionTypeId) {
+
+    public ResponseMap getQuestions(Integer questionTypeId) {
         ResponseDataMap responseDataMap = new ResponseDataMap();
         if (questionTypeId == 1) {
-
-//            try{
-//                List<Question> questions = (List<Question>) (Object) mcqQuestionRepo.getQuestions();
-//                if(questions == null){
-//                    throw new NotFoundException("Question Not Found");
-//                }
-//            }catch (NotFoundException nfe){
-//                    nfe.printStackTrace();
-//            }
-
-//            if(questions!=null){
-//                responseDataMap.setResponseSucess("Question Found");
-//                responseDataMap.putData("questions", questions);
-//            }else
-//            {
-//                responseDataMap.setResponseSucess("No Question Found");
-//                responseDataMap.putData("questions", new List[]{});
-//            }
-            //  return  mcqQuestionRepo.getQuestion().stream().map(q -> (Question) q).collect(Collectors.toList());
+            List<Question> questions = (List<Question>) (Object) mcqQuestionRepo.getQuestions();
+            if (questions != null) {
+                responseDataMap.putData("questions", questions);
+            } else {
+                responseDataMap.putData("questions", new List[]{});
+            }
             return responseDataMap;
         } else {
             //return  codingQuestionRepo.getQuestion().stream().map(q -> (Question) q).collect(Collectors.toList());
-           // return (List) codingQuestionRepo.getQuestion(questionId);
+            // return (List) codingQuestionRepo.getQuestion(questionId);
         }
         return responseDataMap;
     }
@@ -84,9 +73,9 @@ public class QuestionServiceImpl implements QuestionService {
             McqQuestion mcqQuestion = new McqQuestion(question);
             isQuestionAdded = (mcqQuestionRepo.addQuestion(mcqQuestion) > 0);
             if (isQuestionAdded) {
-                responseMap.setResponseSucess("Mcq question added successfully");
+                responseMap.setMessage("Mcq question added successfully");
             } else {
-                responseMap.setResponseError("Mcq question could not be added");
+
             }
             return responseMap;
         } else {
@@ -94,7 +83,7 @@ public class QuestionServiceImpl implements QuestionService {
         return responseMap;
     }
 
-    public ResponseDataMap getQuestionByTag(String questionTag) {
+    public ResponseMap getQuestionByTag(String questionTag) {
         List<CodingQuestion> codingQuestions = codingQuestionRepo.getQuestionByTag(questionTag);
         List<McqQuestion> mcqQuestions = mcqQuestionRepo.getQuestionByTag(questionTag);
         HashMap questionsMap = new HashMap();
@@ -111,29 +100,33 @@ public class QuestionServiceImpl implements QuestionService {
             questionsMap.put("mcqQuestions", mcqQuestions);
         }
 
-        responseDataMap.setResponseSucess("QuestionsFound");
-
+        responseDataMap.setMessage("QuestionsFound");
+        responseDataMap.setStatus(HttpStatus.OK);
         responseDataMap.putData("questions", questionsMap);
         return responseDataMap;
     }
 
-    public ResponseDataMap editQuestion(LinkedHashMap question) {
+    public ResponseMap editQuestion(LinkedHashMap question) {
         Boolean isQuestionAdded;
         int questionTypeId = (int) question.get(constants.questionTypeId.toString());
-        ResponseDataMap responseDataMap = new ResponseDataMap();
+        ResponseMap responseMap = new ResponseMap();
 
         if (questionTypeId == 1) {
-            McqQuestion mcqQuestion = new McqQuestion(question);
-            isQuestionAdded = (mcqQuestionRepo.addQuestion(mcqQuestion) > 0);
+            McqQuestion mcqQuestion = new McqQuestion(question, true);
+            isQuestionAdded = (mcqQuestionRepo.updateQuestion(mcqQuestion) > 0);
             if (isQuestionAdded) {
-                responseDataMap.setResponseSucess("Mcq question edited successfully");
+                responseMap.setMessage("Mcq question edited successfully");
+                responseMap.setStatus(HttpStatus.OK);
+                return responseMap;
             } else {
-                responseDataMap.setResponseError("Mcq question could not be edited");
+                ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
+                apiError.setMessage("Question Not Found");
+                return apiError;
             }
-            return responseDataMap;
         } else {
+            return responseMap;
         }
-        return responseDataMap;
+
     }
 
 }

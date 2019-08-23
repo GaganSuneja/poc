@@ -1,0 +1,138 @@
+{
+  "user":
+  [
+    {
+      "username":"harshit",
+      "password":"harshit",
+      "role":"Admin"
+    },
+    {
+      "username":"gagansuneja",
+      "password":"gagansuneja",
+      "role":"user"
+    }
+  ]
+  ,
+    "mcqQuestions": [
+        {
+            "questionId": 14,
+            "questionTypeId": 1,
+            "questionTag": "java",
+            "questionText": "what is your answer>",
+            "optionA": "a",
+            "optionB": "b",
+            "optionC": "c",
+            "optionD": "d",
+            "answerKey": 1,
+            "questionMarks": 0
+        },
+        {
+            "questionId": 15,
+            "questionTypeId": 1,
+            "questionTag": "java",
+            "questionText": "what is your answer>",
+            "optionA": "a",
+            "optionB": "b",
+            "optionC": "c",
+            "optionD": "d",
+            "answerKey": 1,
+            "questionMarks": 0
+        },
+        {
+            "questionId": 16,
+            "questionTypeId": 1,
+            "questionTag": "java",
+            "questionText": "add mcq question",
+            "optionA": "a",
+            "optionB": "b",
+            "optionC": "c",
+            "optionD": "d",
+            "answerKey": 1,
+            "questionMarks": 0
+        },
+        {
+            "questionId": 17,
+            "questionTypeId": 1,
+            "questionTag": "java",
+            "questionText": "add mcq question",
+            "optionA": "a",
+            "optionB": "b",
+            "optionC": "c",
+            "optionD": "d",
+            "answerKey": 1,
+            "questionMarks": 0
+        },
+        {
+            "questionId": 18,
+            "questionTypeId": 1,
+            "questionTag": "java",
+            "questionText": "are you ok?",
+            "optionA": "yes",
+            "optionB": "no",
+            "optionC": "maybe",
+            "optionD": "not sure",
+            "answerKey": 1,
+            "questionMarks": 0
+        },
+        {
+            "questionId": 20,
+            "questionTypeId": 1,
+            "questionTag": "java",
+            "questionText": "what is your name",
+            "optionA": "yes",
+            "optionB": "no",
+            "optionC": "maybe",
+            "optionD": "not sure",
+            "answerKey": 1,
+            "questionMarks": 0
+        },
+        {
+            "questionId": 21,
+            "questionTypeId": 1,
+            "questionTag": "java",
+            "questionText": "what is your name",
+            "optionA": "yes",
+            "optionB": "no",
+            "optionC": "maybe",
+            "optionD": "not sure",
+            "answerKey": 1,
+            "questionMarks": 0
+        },
+        {
+            "questionId": 23,
+            "questionTypeId": 1,
+            "questionTag": "java",
+            "questionText": "what is your name",
+            "optionA": "yes",
+            "optionB": "no",
+            "optionC": "maybe",
+            "optionD": "not sure",
+            "answerKey": 1,
+            "questionMarks": 0
+        },
+        {
+            "questionId": 19,
+            "questionTypeId": 1,
+            "questionTag": "java",
+            "questionText": "what is your name",
+            "optionA": "yes",
+            "optionB": "hello",
+            "optionC": "maybe",
+            "optionD": "not sure",
+            "answerKey": 1,
+            "questionMarks": 0
+        },
+        {
+            "questionId": 22,
+            "questionTypeId": 1,
+            "questionTag": "java",
+            "questionText": "what is your name",
+            "optionA": "yes",
+            "optionB": "hello",
+            "optionC": "maybe",
+            "optionD": "not sure",
+            "answerKey": 1,
+            "questionMarks": 0
+        }
+    ]
+}

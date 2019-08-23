@@ -1,90 +1,56 @@
-body{
-background-color: #f5f5f5;
-margin:0 ;
-padding:0;
+:root {
+    --input-padding-x: 1.5rem;
+    --input-padding-y: .75rem;
+  }
+  .container{
+      padding-bottom: 25px;
+  }
   
-}
-.container{
-    position:absolute;
-    margin:auto;
-    top: 0;
-    bottom:0;
-    left:0;
-    right:0;
-    height:350px;
-    width:650px;
-    perspective: 800px;
-    -webkit-perspective: 800px;
-}
-.form{
-    height:100%;
-    width:100%;
-    
-    position: relative;
-    transform-style: preserve-3d;
-   -webkit-transform-style: preserve-3d; 
-   transform: 1s ease-in;
-}
-.front,.back{
-    background-color: #ffffff;
-    height:350px;
-    width:300px;
-    position:relative;
-    backface-visibility: hidden;
-    
-
-}
-.back{bottom: 350px;
-    transform: rotateY(180deg);
-
-     
-}
-.left,.right{
-    height:350px;
-    width:300px;
-    box-sizing: border-box;
-
-}
-.left{
-    background-color:#6699ff;
-    padding-left: 120px;
-}
-.right{
-   
-    position:relative;
-    bottom: 350px;
-    left:300px;
-    padding-top: 115px;
-    padding-left: 20px;
-}
-input{
-    width:260px;
-    border:none;
-    border-bottom: 2px solid d1d1d1;
-     font-size: 18px;
-     outline: none;
-     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
-.btn1,.btn2{
-    color:white;
-    font-size:25px;
-    background-color:#6699ff;
-    padding:8px;
-    border:none;
-    width:260px;
-    outline: none
-     
-}
-.btn2{border:2px solid white;
-    cursor:pointer;
-
-}
-.title1,.title2{
-    color:white;
-    font-size:25px;
-    margin-bottom: 50px;
-    position:reltive;
-}
-a{
-    font-size:20px;color: #262626;
-}
+  body {
+    background: #007bff;
+    background: linear-gradient(to right, #0062E6, #33AEFF);
+    height: 100vh;
+    width: 100vw;
+  }
+  
+  .card-signin {
+    border: 0;
+    border-radius: 10px;
+    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-signin .card-title {
+    margin-bottom: 2rem;
+    font-weight: 300;
+    font-size: 1.5rem;
+  }
+  
+  .card-signin .card-body {
+    padding: 2rem;
+  }
+  
+  .form-signin {
+    width: 100%;
+  }
+  
+  .form-signin .btn {
+    font-size: 80%;
+    border-radius: 5rem;
+    letter-spacing: .1rem;
+    font-weight: bold;
+    padding: 1rem;
+    transition: all 0.2s;
+  }
+  
+  
+  .btn-google {
+    color: white;
+    background-color: #ea4335;
+    border-radius: 24px;
+  }
+  
+  .btn-signup {
+    color: white;
+    background-color: #3b5998;
+    border-radius: 24px;
+  }

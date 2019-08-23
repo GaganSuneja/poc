@@ -1,0 +1,30 @@
+<div>
+        <div class="box" *ngFor="let c of filteredquestions;let i=index">
+                <div class="inner">
+                    <br>
+                    ID:{{c.questionId}}
+                    <br>
+                    Question {{i+1}}:<p>{{c.questionText}}</p>
+                    <form><ol>
+                        <li>{{c.optionA}}</li>
+                        <li>
+                                {{c.optionB}}
+                                </li>
+                                <li>
+                                        {{c.optionC}}
+                                        </li>
+                                        <li>
+                                                {{c.optionD}}
+                                                </li>
+                    </ol>
+            <app-editmodal #edit ></app-editmodal>
+                    <button class="btn btn-lg btn-outline-primary" (click)="openeditquestion(c.questionId)">Edit</button>
+            <app-deletemodal #delete></app-deletemodal>
+                    <button class="btn btn-lg btn-outline-danger" (click)="opendeletequestion(c.questionTypeId,c.questionId)" >Delete</button>
+                </form>
+                <span class="pull-right">{{c.answerKey}}</span>
+                </div>
+            </div>    
+        <div>
+</div>
+

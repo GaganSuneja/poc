@@ -1,0 +1,12 @@
+<app-header (featureloaded)="navigate($event)"></app-header>
+<div class="row">
+  <div class="col-md-8">
+<app-mcquestions *ngIf="loadedfeature" [qType]="loadedfeature"></app-mcquestions>
+
+</div>
+</div>
+<div>
+  <!-- <app-modal></app-modal> -->
+ <!-- <button class="btn btn-danger">DELETE</button> -->
+  </div>
+

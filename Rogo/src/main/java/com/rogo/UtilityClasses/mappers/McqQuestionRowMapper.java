@@ -1,4 +1,4 @@
-package com.rogo.UtilityClasses;
+package com.rogo.UtilityClasses.mappers;
 
 import com.rogo.bean.McqQuestion;
 import org.springframework.jdbc.core.RowMapper;

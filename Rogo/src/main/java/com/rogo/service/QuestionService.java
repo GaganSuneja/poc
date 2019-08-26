@@ -1,23 +1,21 @@
 package com.rogo.service;
 
-import com.rogo.bean.Question;
 import com.rogo.exception.RogoCustomException;
-import com.rogo.responseClasses.ResponseDataMap;
-import com.rogo.responseClasses.ResponseMap;
+import com.rogo.UtilityClasses.responseClasses.ResponseMap;
+import org.springframework.dao.DataAccessException;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 
 public interface QuestionService {
-    public ResponseMap getQuestions(Integer questionTypeId);
+    ResponseMap getQuestions(Integer questionTypeId) throws DataAccessException;
 
-    public ResponseMap addQuestion(LinkedHashMap question);
+    ResponseMap addQuestion(LinkedHashMap question) throws DataAccessException;
 
-    public ResponseMap getQuestionByTag(String questionTag);
+    ResponseMap getQuestionByTag(String questionTag) throws DataAccessException;
 
-    public ResponseMap editQuestion(LinkedHashMap question);
+    ResponseMap editQuestion(LinkedHashMap question) throws DataAccessException;
 
-    public ResponseMap getQuestion(Integer questionTypeId,Integer questionId) throws RogoCustomException;
+    ResponseMap getQuestion(Integer questionTypeId, Integer questionId) throws RogoCustomException, DataAccessException;
 
-    public ResponseMap deleteQuestion(Integer questionTypeId,Integer questionId);
+    ResponseMap deleteQuestion(Integer questionTypeId, Integer questionId) throws DataAccessException;
 }

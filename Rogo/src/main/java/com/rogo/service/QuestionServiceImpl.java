@@ -8,19 +8,20 @@ import com.rogo.config.*;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
-//import com.rogo.exceptions.NotFoundException;
 import com.rogo.exception.ApiError;
 import com.rogo.exception.RogoCustomException;
-import com.rogo.responseClasses.ResponseDataMap;
-import com.rogo.responseClasses.ResponseMap;
+import com.rogo.UtilityClasses.responseClasses.ResponseDataMap;
+import com.rogo.UtilityClasses.responseClasses.ResponseMap;
 import com.rogo.repo.QuestionRepo;
+import com.rogo.UtilityClasses.responseKeys.Questions;
+import com.rogo.UtilityClasses.responseMessages.ErrorMessages;
+import com.rogo.UtilityClasses.responseMessages.SuccessMessages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import com.rogo.UtilityClasses.types.QuestionType;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
@@ -29,52 +30,59 @@ public class QuestionServiceImpl implements QuestionService {
     @Autowired
     QuestionRepo<CodingQuestion> codingQuestionRepo;
 
-    public ResponseMap getQuestion(Integer questionTypeId, Integer questionId) throws RogoCustomException {
+    public ResponseMap getQuestions(Integer questionTypeId) throws DataAccessException {
         ResponseDataMap responseDataMap = new ResponseDataMap();
+        List<Question> questions = null;
 
         if (questionTypeId == 1) {
-            Question mcqQuestion = null;
-            mcqQuestion = mcqQuestionRepo.getQuestion(questionId);
-            responseDataMap.putData("question", mcqQuestion);
+            questions = (List<Question>) (Object) mcqQuestionRepo.getQuestions();
+        } else if (questionTypeId == 2) {
+            questions = (List<Question>) (Object) codingQuestionRepo.getQuestions();
         } else {
-            Question codingQuestion = null;
-                codingQuestion = codingQuestionRepo.getQuestion(questionId);
-                responseDataMap.putData("question", codingQuestion);
+            return buildErrorResponse(ErrorMessages.Q_TYPE_NOT_FOUND.toString());
         }
+        responseDataMap.putData(Questions.QUESTIONS.toString(), (questions == null) ? new List[]{} : questions);
+        responseDataMap.setStatus(HttpStatus.OK);
+        responseDataMap.setMessage(SuccessMessages.FOUND.toString());
         return responseDataMap;
 
     }
 
-    public ResponseMap getQuestions(Integer questionTypeId) {
+
+    public ResponseMap getQuestion(Integer questionTypeId, Integer questionId) throws RogoCustomException, DataAccessException {
         ResponseDataMap responseDataMap = new ResponseDataMap();
+        Question question = null;
         if (questionTypeId == 1) {
-            List<Question> questions = (List<Question>) (Object) mcqQuestionRepo.getQuestions();
-            responseDataMap.putData("questions",(questions == null)?new List[]{}:questions);
-            return responseDataMap;
+            question = mcqQuestionRepo.getQuestion(questionId);
+        } else if (questionTypeId == 2) {
+            question = codingQuestionRepo.getQuestion(questionId);
+
         } else {
-            //return  codingQuestionRepo.getQuestion().stream().map(q -> (Question) q).collect(Collectors.toList());
-            // return (List) codingQuestionRepo.getQuestion(questionId);
+            return buildErrorResponse(ErrorMessages.Q_TYPE_NOT_FOUND.toString());
         }
+
+        responseDataMap.putData(Questions.QUESTION.toString(), question);
+        responseDataMap.setStatus(HttpStatus.OK);
+        responseDataMap.setMessage(SuccessMessages.FOUND.toString());
         return responseDataMap;
     }
 
-    public ResponseMap addQuestion(LinkedHashMap question) {
-        ResponseMap responseMap = new ResponseMap();
+
+    public ResponseMap addQuestion(LinkedHashMap question) throws DataAccessException {
         int questionTypeId = (int) question.get(constants.questionTypeId.toString());
         if (questionTypeId == 1) {
             McqQuestion mcqQuestion = new McqQuestion(question);
-            if ((mcqQuestionRepo.addQuestion(mcqQuestion) > 0)) {
-                responseMap.setMessage("Mcq question added successfully");
-            } else {
-
-            }
-            return responseMap;
-        } else {
+            mcqQuestionRepo.addQuestion(mcqQuestion);
+            return buildResponseMap(SuccessMessages.ADD.toString());
+        } else if (questionTypeId == 2) {
+            CodingQuestion codingQuestion = new CodingQuestion(question);
+            codingQuestionRepo.addQuestion(codingQuestion);
+            return buildResponseMap(SuccessMessages.ADD.toString());
         }
-        return responseMap;
+        return buildErrorResponse(ErrorMessages.Q_TYPE_NOT_FOUND.toString());
     }
 
-    public ResponseMap getQuestionByTag(String questionTag) {
+    public ResponseMap getQuestionByTag(String questionTag) throws DataAccessException {
         List<CodingQuestion> codingQuestions = codingQuestionRepo.getQuestionByTag(questionTag);
         List<McqQuestion> mcqQuestions = mcqQuestionRepo.getQuestionByTag(questionTag);
 
@@ -82,51 +90,60 @@ public class QuestionServiceImpl implements QuestionService {
 
         ResponseDataMap responseDataMap = new ResponseDataMap();
 
-        questionsMap.put("codingQuestions", (codingQuestions == null) ? new List[]{} : codingQuestions);
-        questionsMap.put("mcqQuestions", (mcqQuestions == null) ? new List[]{} : mcqQuestions);
+        questionsMap.put(Questions.CODING.toString(), (codingQuestions == null) ? new List[]{} : codingQuestions);
+        questionsMap.put(Questions.MCQ.toString(), (mcqQuestions == null) ? new List[]{} : mcqQuestions);
 
         responseDataMap.setStatus(HttpStatus.OK);
-        responseDataMap.setMessage("QuestionsFound");
-        responseDataMap.putData("questions", questionsMap);
+        responseDataMap.setMessage(SuccessMessages.FOUND.toString());
+        responseDataMap.putData(Questions.QUESTION.toString(), questionsMap);
 
         return responseDataMap;
     }
 
-    public ResponseMap editQuestion(LinkedHashMap question) {
+    public ResponseMap editQuestion(LinkedHashMap question) throws DataAccessException {
         int questionTypeId = (int) question.get(constants.questionTypeId.toString());
-        ResponseMap responseMap = new ResponseMap();
-        if (questionTypeId == 1) {
-            McqQuestion mcqQuestion = new McqQuestion(question, true);
-            if ((mcqQuestionRepo.updateQuestion(mcqQuestion) > 0)) {
-                responseMap.setStatus(HttpStatus.OK);
-                responseMap.setMessage("Mcq question edited successfully");
-                return responseMap;
-            } else {
-                ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
-                apiError.setMessage("Question Not Found");
-                return apiError;
-            }
-        } else {
-            return responseMap;
+
+        switch (questionTypeId) {
+            case 1:
+                McqQuestion mcqQuestion = new McqQuestion(question, true);
+                return (mcqQuestionRepo.updateQuestion(mcqQuestion) > 0) ? buildResponseMap(SuccessMessages.EDIT.toString()) :
+                        buildErrorResponse(ErrorMessages.Q_NOT_FOUND.toString());
+            case 2:
+                CodingQuestion codingQuestion = new CodingQuestion(question, true);
+                return (codingQuestionRepo.updateQuestion(codingQuestion) > 0) ? buildResponseMap(SuccessMessages.EDIT.toString()) :
+                        buildErrorResponse(ErrorMessages.Q_NOT_FOUND.toString());
+            default:
+                return buildErrorResponse(ErrorMessages.Q_TYPE_NOT_FOUND.toString());
         }
 
     }
 
     @Override
-    public ResponseMap deleteQuestion(Integer questionTypeId, Integer questionId) {
-        ResponseMap responseMap = new ResponseMap();
-        if(questionTypeId==1) {
-            if (mcqQuestionRepo.deleteQuestion(questionId) > 0) {
-                responseMap.setMessage("question deleted");
-                responseMap.setStatus(HttpStatus.OK);
-                return responseMap;
-            } else {
-                ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
-                apiError.setMessage("Question Not Found");
-                return apiError;
-            }
-        }else{
-            return  responseMap;
+    public ResponseMap deleteQuestion(Integer questionTypeId, Integer questionId) throws DataAccessException {
+        switch (questionTypeId) {
+            case 1:
+                return (mcqQuestionRepo.deleteQuestion(questionId) > 0) ? buildResponseMap(SuccessMessages.DELETE.toString()) :
+                        buildErrorResponse(ErrorMessages.Q_NOT_FOUND.toString());
+            case 2:
+                return (codingQuestionRepo.deleteQuestion(questionId) > 0) ? buildResponseMap(SuccessMessages.DELETE.toString()) :
+                        buildErrorResponse(ErrorMessages.Q_NOT_FOUND.toString());
+            default:
+                return buildErrorResponse(ErrorMessages.Q_TYPE_NOT_FOUND.toString());
         }
     }
+
+    private ApiError buildErrorResponse(String message) {
+        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
+        apiError.setMessage(message);
+        return apiError;
+    }
+
+    private ResponseMap buildResponseMap(String message) {
+        ResponseMap responseMap = new ResponseMap();
+        responseMap.setStatus(HttpStatus.OK);
+        responseMap.setMessage(message);
+        return responseMap;
+    }
+
+
 }

@@ -1,4 +1,4 @@
-package com.rogo.responseClasses;
+package com.rogo.UtilityClasses.responseClasses;
 
 import java.util.HashMap;
 

@@ -1,8 +1,7 @@
 package com.rogo.repo;
 
 import com.rogo.bean.CodingQuestion;
-import com.rogo.bean.CodingQuestionRowMapper;
-import com.rogo.responseClasses.ResponseMap;
+import com.rogo.UtilityClasses.CodingQuestionRowMapper;
 import io.micrometer.core.lang.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;

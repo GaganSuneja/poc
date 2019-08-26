@@ -1,8 +1,7 @@
 package com.rogo.repo;
 
-import com.rogo.bean.CodingQuestion;
 import com.rogo.bean.McqQuestion;
-import com.rogo.bean.McqQuestionRowMapper;
+import com.rogo.UtilityClasses.McqQuestionRowMapper;
 import com.rogo.exception.RogoCustomException;
 import io.micrometer.core.lang.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-
 import javax.sql.DataSource;
 import java.util.List;
 
@@ -40,8 +38,9 @@ public class McqQuestionRepo implements QuestionRepo<McqQuestion> {
     public McqQuestion getQuestion(@Nullable Integer questionId) throws RogoCustomException{
         McqQuestion mcqQuestion = null;
         try {
-            mcqQuestion = jdbcTemplate.queryForObject("select * from mcq_questions where q_id = ?", new McqQuestionRowMapper()
-                    , new Object[]{questionId});
+            mcqQuestion = jdbcTemplate.queryForObject("select * from mcq_questions where q_id = ?",
+                          new McqQuestionRowMapper(),
+                          new Object[]{questionId});
         }catch(EmptyResultDataAccessException e){
             throw new RogoCustomException(HttpStatus.NOT_FOUND,"resource not found");
         }
@@ -53,19 +52,19 @@ public class McqQuestionRepo implements QuestionRepo<McqQuestion> {
         int noOfRowsAffected = -1;
         try {
             noOfRowsAffected = jdbcTemplate.update("insert into mcq_questions(q_text," +
-                            "option_a,option_b,option_c,option_d,answer_key,q_mark,q_tag)" +
-                            " values (?,?,?,?,?,?,?,?)",
-                    new Object[]{
-                            mcqQuestion.getQuestionText(),
-                            mcqQuestion.getOptionA(),
-                            mcqQuestion.getOptionB(),
-                            mcqQuestion.getoptionC(),
-                            mcqQuestion.getOptionD(),
-                            mcqQuestion.getAnswerKey(),
-                            mcqQuestion.getQuestionMark(),
-                            mcqQuestion.getQuestionTag()
-                    }
-            );
+                              "option_a,option_b,option_c,option_d,answer_key,q_mark,q_tag)" +
+                              " values (?,?,?,?,?,?,?,?)",
+                                new Object[]{
+                                        mcqQuestion.getQuestionText(),
+                                        mcqQuestion.getOptionA(),
+                                        mcqQuestion.getOptionB(),
+                                        mcqQuestion.getoptionC(),
+                                        mcqQuestion.getOptionD(),
+                                        mcqQuestion.getAnswerKey(),
+                                        mcqQuestion.getQuestionMark(),
+                                        mcqQuestion.getQuestionTag()
+                                    }
+                                 );
         } catch (DataAccessException e) {
             e.printStackTrace();
         }
@@ -112,9 +111,7 @@ public class McqQuestionRepo implements QuestionRepo<McqQuestion> {
         noOfRowsAffected = jdbcTemplate.update("delete from mcq_questions where q_id = ?",
                 new Object[]{questionId}
         );
-
         return noOfRowsAffected;
-
     }
 
 }

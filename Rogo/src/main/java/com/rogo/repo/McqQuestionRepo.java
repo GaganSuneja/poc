@@ -26,13 +26,13 @@ public class McqQuestionRepo implements QuestionRepo<McqQuestion> {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public List<McqQuestion> getQuestions() throws DataAccessException {
+    public List<McqQuestion> getQuestions() {
         List<McqQuestion> mcqQuestions = null;
         mcqQuestions = jdbcTemplate.query("select * from mcq_questions", new McqQuestionRowMapper());
         return mcqQuestions;
     }
 
-    public McqQuestion getQuestion(@Nullable Integer questionId) throws RogoCustomException,DataAccessException {
+    public McqQuestion getQuestion(@Nullable Integer questionId) throws RogoCustomException {
         McqQuestion mcqQuestion = null;
         try {
             mcqQuestion = jdbcTemplate.queryForObject("select * from mcq_questions where q_id = ?",
@@ -45,7 +45,7 @@ public class McqQuestionRepo implements QuestionRepo<McqQuestion> {
         return mcqQuestion;
     }
 
-    public int addQuestion(McqQuestion mcqQuestion) throws DataAccessException {
+    public int addQuestion(McqQuestion mcqQuestion){
         int noOfRowsAffected = -1;
         noOfRowsAffected = jdbcTemplate.update("insert into mcq_questions(q_text," +
                         "option_a,option_b,option_c,option_d,answer_key,q_mark,q_tag)" +
@@ -64,14 +64,14 @@ public class McqQuestionRepo implements QuestionRepo<McqQuestion> {
         return noOfRowsAffected;
     }
 
-    public List<McqQuestion> getQuestionByTag(String questionTag) throws DataAccessException {
+    public List<McqQuestion> getQuestionByTag(String questionTag) {
         List<McqQuestion> mcqQuestions = null;
         String query = "select * from mcq_questions where q_tag = ?";
         mcqQuestions = jdbcTemplate.query(query, new Object[]{questionTag}, new McqQuestionRowMapper());
         return mcqQuestions;
     }
 
-    public int updateQuestion(McqQuestion mcqQuestion) throws DataAccessException {
+    public int updateQuestion(McqQuestion mcqQuestion) {
         int noOfRowsAffected = -1;
 
         noOfRowsAffected = jdbcTemplate.update("update mcq_questions set q_text = ?," +
@@ -94,7 +94,7 @@ public class McqQuestionRepo implements QuestionRepo<McqQuestion> {
     }
 
 
-    public int deleteQuestion(Integer questionId) throws DataAccessException {
+    public int deleteQuestion(Integer questionId) {
         int noOfRowsAffected = -1;
 
         noOfRowsAffected = jdbcTemplate.update("delete from mcq_questions where q_id = ?",

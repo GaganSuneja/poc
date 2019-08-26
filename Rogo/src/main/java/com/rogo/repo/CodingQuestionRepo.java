@@ -18,7 +18,7 @@ public class CodingQuestionRepo implements QuestionRepo<CodingQuestion> {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    public List<CodingQuestion> getQuestions() throws DataAccessException {
+    public List<CodingQuestion> getQuestions()   {
         List<CodingQuestion> codingQuestions = null;
 
         codingQuestions = jdbcTemplate.query("SELECT * FROM coding_questions",
@@ -28,7 +28,7 @@ public class CodingQuestionRepo implements QuestionRepo<CodingQuestion> {
         return codingQuestions;
     }
 
-    public CodingQuestion getQuestion(@Nullable Integer questionId) throws RogoCustomException, DataAccessException {
+    public CodingQuestion getQuestion(@Nullable Integer questionId) throws RogoCustomException {
         CodingQuestion codingQuestion = null;
         try {
             codingQuestion = jdbcTemplate.queryForObject("select * from coding_questions where q_id = ?",
@@ -42,7 +42,7 @@ public class CodingQuestionRepo implements QuestionRepo<CodingQuestion> {
     }
 
     @Override
-    public int addQuestion(CodingQuestion question) throws DataAccessException {
+    public int addQuestion(CodingQuestion question) {
         int noOfRowAffected = -1;
         noOfRowAffected = jdbcTemplate.update("insert into coding_questions (q_text,q_mark,q_tag) values(?,?,?)",
                 new Object[]{
@@ -58,7 +58,7 @@ public class CodingQuestionRepo implements QuestionRepo<CodingQuestion> {
     }
 
 
-    public int updateQuestion(CodingQuestion codingQuestion) throws DataAccessException {
+    public int updateQuestion(CodingQuestion codingQuestion)   {
         int noOfRowsAffected = -1;
         noOfRowsAffected = jdbcTemplate.update("update mcq_questions set q_text = ?," +
                         "q_mark=?,q_tag=?" +
@@ -73,7 +73,7 @@ public class CodingQuestionRepo implements QuestionRepo<CodingQuestion> {
         return noOfRowsAffected;
     }
 
-    public int deleteQuestion(Integer questionId) throws DataAccessException {
+    public int deleteQuestion(Integer questionId)   {
         int noOfRowsAffected = -1;
 
         noOfRowsAffected = jdbcTemplate.update("delete from coding_questions where q_id = ?",

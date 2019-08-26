@@ -18,10 +18,9 @@ import com.rogo.UtilityClasses.responseKeys.Questions;
 import com.rogo.UtilityClasses.responseMessages.ErrorMessages;
 import com.rogo.UtilityClasses.responseMessages.SuccessMessages;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import com.rogo.UtilityClasses.types.QuestionType;
+
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
@@ -30,7 +29,7 @@ public class QuestionServiceImpl implements QuestionService {
     @Autowired
     QuestionRepo<CodingQuestion> codingQuestionRepo;
 
-    public ResponseMap getQuestions(Integer questionTypeId) throws DataAccessException {
+    public ResponseMap getQuestions(Integer questionTypeId) {
         ResponseDataMap responseDataMap = new ResponseDataMap();
         List<Question> questions = null;
 
@@ -49,7 +48,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
 
-    public ResponseMap getQuestion(Integer questionTypeId, Integer questionId) throws RogoCustomException, DataAccessException {
+    public ResponseMap getQuestion(Integer questionTypeId, Integer questionId) throws RogoCustomException {
         ResponseDataMap responseDataMap = new ResponseDataMap();
         Question question = null;
         if (questionTypeId == 1) {
@@ -68,7 +67,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
 
-    public ResponseMap addQuestion(LinkedHashMap question) throws DataAccessException {
+    public ResponseMap addQuestion(LinkedHashMap question) {
         int questionTypeId = (int) question.get(constants.questionTypeId.toString());
         if (questionTypeId == 1) {
             McqQuestion mcqQuestion = new McqQuestion(question);
@@ -82,7 +81,7 @@ public class QuestionServiceImpl implements QuestionService {
         return buildErrorResponse(ErrorMessages.Q_TYPE_NOT_FOUND.toString());
     }
 
-    public ResponseMap getQuestionByTag(String questionTag) throws DataAccessException {
+    public ResponseMap getQuestionByTag(String questionTag){
         List<CodingQuestion> codingQuestions = codingQuestionRepo.getQuestionByTag(questionTag);
         List<McqQuestion> mcqQuestions = mcqQuestionRepo.getQuestionByTag(questionTag);
 
@@ -100,7 +99,7 @@ public class QuestionServiceImpl implements QuestionService {
         return responseDataMap;
     }
 
-    public ResponseMap editQuestion(LinkedHashMap question) throws DataAccessException {
+    public ResponseMap editQuestion(LinkedHashMap question) {
         int questionTypeId = (int) question.get(constants.questionTypeId.toString());
 
         switch (questionTypeId) {
@@ -119,7 +118,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public ResponseMap deleteQuestion(Integer questionTypeId, Integer questionId) throws DataAccessException {
+    public ResponseMap deleteQuestion(Integer questionTypeId, Integer questionId) {
         switch (questionTypeId) {
             case 1:
                 return (mcqQuestionRepo.deleteQuestion(questionId) > 0) ? buildResponseMap(SuccessMessages.DELETE.toString()) :

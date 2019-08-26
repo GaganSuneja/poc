@@ -1,5 +1,6 @@
-package com.rogo.bean;
+package com.rogo.UtilityClasses.mappers;
 
+import com.rogo.bean.CodingQuestion;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

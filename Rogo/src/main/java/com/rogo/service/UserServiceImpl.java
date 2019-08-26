@@ -1,6 +1,6 @@
 package com.rogo.service;
 
-import com.rogo.responseClasses.ResponseMap;
+import com.rogo.UtilityClasses.responseClasses.ResponseMap;
 import com.rogo.bean.User;
 import com.rogo.bean.UserLogin;
 import com.rogo.repo.UserRepo;

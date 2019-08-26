@@ -1,11 +1,6 @@
-package com.rogo.responseClasses;
+package com.rogo.UtilityClasses.responseClasses;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class ResponseMap {
 

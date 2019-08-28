@@ -109,7 +109,7 @@
     background-color: #ea4335;
   }
   
-  .btn-facebook {
+  .btn-signup {
     color: white;
     background-color: #3b5998;
   }

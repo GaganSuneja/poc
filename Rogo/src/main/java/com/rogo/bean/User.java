@@ -1,14 +1,10 @@
 package com.rogo.bean;
 
-
-import org.springframework.context.annotation.Bean;
-
-
 public class User {
-    private int userId;
+    private String userId;
     private int userTypeId;
-    private int userName;
-    private int firstName;
+    private String userName;
+    private String firstName;
     private String lastName;
     private String userPassword;
     private String email;
@@ -17,7 +13,7 @@ public class User {
 
     User(){}
 
-    public User(int userId, int firstName, String lastName, String userPassword, String email, String createdAt, boolean isActive) {
+    public User(String userId, String firstName, String lastName, String userPassword, String email, String createdAt, boolean isActive) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -27,11 +23,11 @@ public class User {
         this.isActive = isActive;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
@@ -43,19 +39,19 @@ public class User {
         this.userTypeId = userTypeId;
     }
 
-    public int getUserName() {
+    public String getUserName() {
         return userName;
     }
 
-    public void setUserName(int userName) {
+    public void setUserName(String userName) {
         this.userName = userName;
     }
 
-    public int getFirstName() {
+    public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(int firstName) {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 

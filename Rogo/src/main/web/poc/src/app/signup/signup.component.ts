@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoginSignupService } from '../LoginSignupService.service';
+import { LoginSignupService } from '../login/LoginSignupService.service';
 
 @Component({
   selector: 'app-signup',
@@ -35,36 +35,55 @@ obj:any = {
 }
 
 
-  // onSubmit(myform)
-  // {this.obj.userName=myform.user;
+  onSubmit()
+  {
+  // {this.obj.userName=this.userRegForm.user;
   //   this.obj.firstName=myform.first;
   //   this.obj.lastName=myform.last;
   //   this.obj.email=myform.email;
   //   this.obj.userPassword=myform.pass;
-  //  // this.rest.update(this.obj)
-  //   //.subscribe(response=>console.log(response),
-  //   //error=>console.log(error));
-  // }
+   this.rest.update(this.obj)
+    .subscribe(response=>console.log(response),
+    error=>console.log(error));
+  }
 
-  // onpress()
-  // {
-  //   this.route.navigate(['../']);
-  // }
+  onpress()
+  {
+    this.route.navigate(['../']);
+  }
 
   initializeForm() {
     this.userRegForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(4)]],
-      password: ['', [Validators.required, Validators.minLength(4)]],
-      email: ['', [Validators.required, Validators.minLength(4) ]]
+      user: ['', [Validators.required, Validators.minLength(4)]],
+      first:['', [Validators.required, Validators.minLength(4)]],
+      last:['', [Validators.required, Validators.minLength(4)]],
+      password:  new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(14),
+        Validators.pattern('^[a-zA-Z0-9]+$')
+      ])),
+      email: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+      ]))
     });
   }
 
   get values() {
     return this.userRegForm.value;
   }
+  get first()
+  {
+    return this.userRegForm.get('first');
+  }
+  get last()
+  {
+    return this.userRegForm.get('last');
+  }
 
-  get name() {
-    return this.userRegForm.get('name');
+  get user() {
+    return this.userRegForm.get('user');
   }
   get email() {
     return this.userRegForm.get('email');

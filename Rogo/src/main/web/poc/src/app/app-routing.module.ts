@@ -5,6 +5,7 @@ import { HeaderComponent } from './header/header.component';
 import { loginComponent } from './login/login.component';
 import { HomeComponent } from './Home/Home.component';
 import { UserComponent } from './user/user.component';
+import { EditmodalComponent } from './Home/editmodal/editmodal.component';
 
 
 const routes: Routes = [
@@ -24,8 +25,12 @@ const routes: Routes = [
     component:loginComponent
   },
   {
-    path:"User",
+    path:"user",
     component:UserComponent
+  },
+  {
+    path:"edit",
+    component:EditmodalComponent
   }
   
 ];

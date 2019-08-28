@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';  
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
@@ -11,10 +12,15 @@ import { HomeComponent } from './Home/Home.component';
 import { HttpModule } from '@angular/http';
 import { UserComponent } from './user/user.component';
 
-import { LoginSignupService } from './LoginSignupService.service';
+import { LoginSignupService } from './login/LoginSignupService.service';
 import { McquestionsComponent } from './Home/mcquestions/mcquestions.component';
-import { ModalComponent } from './modal/modal.component';
+import { AddModalComponent } from './Home/addmodal/Addmodal.component';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+
+import { QuestionService } from './Home/questionService.service';
+import { HttpClientModule } from '@angular/common/http';
+import { EditmodalComponent } from './Home/editmodal/editmodal.component';
+import { DeletemodalComponent } from './Home/deletemodal/deletemodal.component'; 
 
 
 @NgModule({
@@ -26,18 +32,22 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
     HomeComponent,
     UserComponent,
     McquestionsComponent,
-    ModalComponent,
+    AddModalComponent,
+    EditmodalComponent,
+    DeletemodalComponent,
     
     
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     AppRoutingModule,FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    NgbModalModule
+    NgbModalModule,
+    HttpClientModule
   ],
-  providers: [LoginSignupService],
+  providers: [LoginSignupService,QuestionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

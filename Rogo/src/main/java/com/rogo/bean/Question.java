@@ -1,44 +1,72 @@
 package com.rogo.bean;
 
 public class Question {
+    private int questionId;
+    private int questionTypeId;
+    private int questionMark;
 
-    private int q_id;
-    private String q_text;
-    private int q_type_id;
-    private int q_mark;
+    private String questionTag;
+    private String questionText;
 
-    public int getQ_id() {
-        return q_id;
+    Question(){}
+
+    Question(int questionMark, String questionTag, String questionText) {
+        this.questionMark = questionMark;
+        this.questionTag = questionTag;
+        this.questionText = questionText;
     }
 
-    public void setQ_id(int q_id) {
-        this.q_id = q_id;
+    Question(int questionMark, String questionTag, String questionText,
+             int questionId,int questionTypeId) {
+        this.questionMark = questionMark;
+        this.questionTag = questionTag;
+        this.questionText = questionText;
+        this.questionTypeId = questionTypeId;
+        this.questionId= questionId;
+
     }
 
-    public String getQ_text() {
-        return q_text;
+    public String getQuestionTag() {
+        return questionTag;
     }
 
-    public void setQ_text(String q_text) {
-        this.q_text = q_text;
+    public void setQuestionTag(String questionTag) {
+        this.questionTag = questionTag;
     }
 
-    public int getQ_type_id() {
-        return q_type_id;
+    public int getQuestionId() {
+        return questionId;
     }
 
-    public void setQ_type_id(int q_type_id) {
-        this.q_type_id = q_type_id;
+    public void setQuestionId(int questionId) {
+        this.questionId = questionId;
     }
 
-    public int getQ_mark() {
-        return q_mark;
+    public String getQuestionText() {
+        return questionText;
     }
 
-    public void setQ_mark(int q_mark) {
-        this.q_mark = q_mark;
+    public void setQuestionText(String questionText) {
+        this.questionText = questionText;
+    }
+
+    public int getQuestionTypeId() {
+        return questionTypeId;
+    }
+
+    public void setQuestionTypeId(int questionTypeId) {
+        this.questionTypeId = questionTypeId;
+    }
+
+    public int getQuestionMark() {
+        return questionMark;
+    }
+
+    public void setQuestionMark(int questionMark) {
+        this.questionMark = questionMark;
     }
 }
+
 
 
 

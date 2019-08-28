@@ -1,0 +1,20 @@
+.box{
+    border: 3px solid rebeccapurple;
+    border-radius: 10px;
+    
+
+}
+.inner{
+    padding: 4px;
+}
+.pull-right
+{
+    margin-left:200px;
+    padding: 6px;
+}
+span,.pull-right{
+    border: 2px solid gray;
+    background-color: aquamarine;
+width: 20px;
+height: 30px;
+}

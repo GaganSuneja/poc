@@ -1,62 +1,104 @@
 package com.rogo.bean;
 
 
-public class McqQuestion extends Question{
+import javax.swing.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import com.rogo.config.*;
+public class McqQuestion extends Question {
 
-    private String option_a;
-    private String option_b;
-    private String option_c;
-    private String option_d;
-    private int answer_key;
+    private String optionA;
+    private String optionB;
+    private String optionC;
+    private String optionD;
+    private int answerKey;
 
-    public McqQuestion() {}
-
-    public McqQuestion(String option_a, String option_b, String option_c, String option_d, int answer_key) {
-        this.option_a = option_a;
-        this.option_b = option_b;
-        this.option_c = option_c;
-        this.option_d = option_d;
-        this.answer_key = answer_key;
+    public McqQuestion() {
     }
 
-    public String getOption_a() {
-        return option_a;
+    public McqQuestion(String optionA, String optionB, String optionC, String optionD, int answerKey) {
+        setOptionsAndAnswerKey(optionA,optionB,optionC,optionD,answerKey);
     }
 
-    public void setOption_a(String option_a) {
-        this.option_a = option_a;
+    public McqQuestion(LinkedHashMap map){
+        super(  (int)map.get(constants.questionMark.toString()),
+                map.get(constants.questionTag.toString()).toString(),
+                map.get(constants.questionText.toString()).toString());
+
+        setOptionsAndAnswerKey(
+                map.get(constants.optionA.toString()).toString(),
+                map.get(constants.optionB.toString()).toString(),
+                map.get(constants.optionC.toString()).toString(),
+                map.get(constants.optionD.toString()).toString(),
+                (int) map.get(constants.answerKey.toString())
+        );
+
     }
 
-    public String getOption_b() {
-        return option_b;
+    public McqQuestion(LinkedHashMap map,Boolean isUpdate){
+        super(  (int)map.get(constants.questionMark.toString()),
+                map.get(constants.questionTag.toString()).toString(),
+                map.get(constants.questionText.toString()).toString(),
+                (int) map.get(constants.questionId.toString()),
+                (int) map.get(constants.questionTypeId.toString()));
+
+        setOptionsAndAnswerKey(
+                map.get(constants.optionA.toString()).toString(),
+                map.get(constants.optionB.toString()).toString(),
+                map.get(constants.optionC.toString()).toString(),
+                map.get(constants.optionD.toString()).toString(),
+                (int) map.get(constants.answerKey.toString())
+        );
+
     }
 
-    public void setOption_b(String option_b) {
-        this.option_b = option_b;
+
+    public void setOptionsAndAnswerKey(String optionA, String optionB, String optionC, String optionD, int answerKey){
+        this.optionA = optionA;
+        this.optionB = optionB;
+        this.optionC = optionC;
+        this.optionD = optionD;
+        this.answerKey = answerKey;
     }
 
-    public String getOption_c() {
-        return option_c;
+    public String getOptionA() {
+        return optionA;
     }
 
-    public void setOption_c(String option_c) {
-        this.option_c = option_c;
+    public void setOptionA(String optionA) {
+        this.optionA = optionA;
     }
 
-    public String getOption_d() {
-        return option_d;
+    public String getOptionB() {
+        return optionB;
     }
 
-    public void setOption_d(String option_d) {
-        this.option_d = option_d;
+    public void setOptionB(String optionB) {
+        this.optionB = optionB;
     }
 
-    public int getAnswer_key() {
-        return answer_key;
+    public String getoptionC() {
+        return optionC;
     }
 
-    public void setAnswer_key(int answer_key) {
-        this.answer_key = answer_key;
+    public void setOptionC(String optionC) {
+        this.optionC = optionC;
+    }
+
+    public String getOptionD() {
+        return optionD;
+    }
+
+    public void setOptionD(String optionD) {
+        this.optionD = optionD;
+    }
+
+    public int getAnswerKey() {
+        return answerKey;
+    }
+
+    public void setAnswerKey(int answerKey) {
+        this.answerKey = answerKey;
     }
 
 }

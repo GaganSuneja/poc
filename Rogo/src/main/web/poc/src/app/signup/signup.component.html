@@ -1,30 +1,57 @@
-<!-- <body>
+<body>
         <div class="container">
           <div class="row">
             <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
               <div class="card card-signin my-5">
                 <div class="card-body">
                   <h5 class="card-title text-center">Sign UP</h5>
-                  <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" >
+                  <form [formGroup]="userRegForm" (ngSubmit)="onSubmit()" >
                       <div class="form-label-group" >
                           Username: <input type="text"  class="form-control" placeholder="USERname" formControlName="user"  >
-                         </div>
+                          <div *ngIf="user.invalid && (user.dirty || user.touched)">
+                            <span *ngIf="user.errors.required">This is required!</span>
+                            <span *ngIf="user.errors.minlength">Minimum length should be 3!</span>
+                       </div> 
+                        </div>
                     <div class="form-label-group">
                      First name: <input type="text"  class="form-control" placeholder="Firstname" formControlName="first"  >
+                     <div *ngIf="first.invalid && (first.dirty || first.touched)">
+                      <span *ngIf="first.errors.required">This is required!</span>
+                      <span *ngIf="first.errors.minlength">Minimum length should be 3!</span>
+                 </div>
                     </div>
                     <div class="form-label-group">
-                        last name: <input type="text"  class="form-control" placeholder="lastname" formControlName="last" >
-                           </div>
+                        last name:<input type="text"  class="form-control" placeholder="lastname" formControlName="last" >
+                           <div *ngIf="last.invalid && (last.dirty || last.touched)">
+                            <span *ngIf="last.errors.required">This is required!</span>
+                            <span *ngIf="last.errors.minlength">Minimum length should be 3!</span>
+                       </div>
+                      </div>
 
                            <div class="form-label-group">
                                 Email: <input type="email" class="form-control" placeholder="email" formControlName="email" >
-                               </div> 
-                    <div class="form-label-group">
-                      Password:<input type="password"  class="form-control" placeholder="Password" formControlName="pass">
-                    </div>
+                                <div class="validate" *ngIf="email.invalid && (email.dirty || email.touched)">
+                                   <span *ngIf="email.errors.required">This is required!</span>
+                                    <span *ngIf="email.errors.pattern">example:xyz@abc.mno</span>
+                                </div>
+                            </div> 
+                            <div class="form-label-group">
+                               Password:<input type="password"  class="form-control" placeholder="Password" formControlName="password">
+                               <div *ngIf="password.invalid && (password.dirty || password.touched)">
+                                  <span *ngIf="password.errors.required">This is required!</span>
+                                  <span *ngIf="password.errors.minlength">Minimum length should be 8!</span>
+                                  <span *ngIf="password.errors.maxlength">Maximum length should be 14!</span>
+                                  <span *ngIf="password.errors.pattern">
+                                    should contain an UpperCase aplhabet
+                                    should contain a lowercase aplhabet
+                                    should contain a special Character
+                                  </span>
+
+                                </div>
+                             </div>
         
                     
-                    <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">SUBMIT</button>
+                    <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" [disabled]="!userRegForm.valid">SUBMIT</button>
                     <hr class="my-4">
                     <button class="btn btn-lg btn-google btn-block text-uppercase" type="button" (click)="onpress()"><i class="fab fa-google mr-2"></i> Sign in </button>
                    
@@ -34,8 +61,8 @@
             </div>
           </div>
         </div>
-      </body> -->
-
+      </body>
+<!-- 
       <div class="container">
         <div class="col-md-6 mt-2">
           <form [formGroup]="userRegForm" (ngSubmit)="formSubmit()">
@@ -70,4 +97,4 @@
           </form>
         </div>
       </div>
-      
+       -->

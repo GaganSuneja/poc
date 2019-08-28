@@ -1,20 +1,22 @@
-.box{
-    border: 3px solid rebeccapurple;
-    border-radius: 10px;
-    
-
-}
-.inner{
-    padding: 4px;
+.card{
+    margin:20px;
 }
 .pull-right
 {
-    margin-left:200px;
-    padding: 6px;
+    margin-left:960px;
+    padding: 2px;
 }
-span,.pull-right{
+span{
     border: 2px solid gray;
-    background-color: aquamarine;
+    border-radius:8px;  
+    background-color: rgba(219, 217, 208, 0.966);
 width: 20px;
 height: 30px;
+}
+.span,.answere{
+    padding: 4px;
+    margin-left:1009px;
+}
+.btn-outline-danger{
+    margin-left:3px;
 }

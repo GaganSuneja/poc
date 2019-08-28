@@ -1,8 +1,7 @@
 package com.rogo.service;
 
 import com.rogo.exception.RogoCustomException;
-import com.rogo.UtilityClasses.responseClasses.ResponseMap;
-import org.springframework.dao.DataAccessException;
+import com.rogo.Utils.responseClasses.ResponseMap;
 
 import java.util.LinkedHashMap;
 

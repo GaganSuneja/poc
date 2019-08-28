@@ -1,7 +1,7 @@
 package com.rogo.repo;
 
 import com.rogo.bean.CodingQuestion;
-import com.rogo.UtilityClasses.mappers.CodingQuestionRowMapper;
+import com.rogo.Utils.mappers.CodingQuestionRowMapper;
 import com.rogo.exception.RogoCustomException;
 import io.micrometer.core.lang.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;

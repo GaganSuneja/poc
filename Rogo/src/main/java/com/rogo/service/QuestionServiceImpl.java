@@ -11,15 +11,17 @@ import java.util.List;
 
 import com.rogo.exception.ApiError;
 import com.rogo.exception.RogoCustomException;
-import com.rogo.UtilityClasses.responseClasses.ResponseDataMap;
-import com.rogo.UtilityClasses.responseClasses.ResponseMap;
+import com.rogo.Utils.responseClasses.ResponseDataMap;
+import com.rogo.Utils.responseClasses.ResponseMap;
 import com.rogo.repo.QuestionRepo;
-import com.rogo.UtilityClasses.responseKeys.Questions;
-import com.rogo.UtilityClasses.responseMessages.ErrorMessages;
-import com.rogo.UtilityClasses.responseMessages.SuccessMessages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import static com.rogo.Utils.responseKeys.Questions.*;
+import static com.rogo.Utils.responseMessages.ErrorMessages.Q_NOT_FOUND;
+import static com.rogo.Utils.responseMessages.ErrorMessages.Q_TYPE_NOT_FOUND;
+import static com.rogo.Utils.responseMessages.SuccessMessages.*;
 
 
 @Service
@@ -38,11 +40,11 @@ public class QuestionServiceImpl implements QuestionService {
         } else if (questionTypeId == 2) {
             questions = (List<Question>) (Object) codingQuestionRepo.getQuestions();
         } else {
-            return buildErrorResponse(ErrorMessages.Q_TYPE_NOT_FOUND.toString());
+            return buildErrorResponse(Q_TYPE_NOT_FOUND.message());
         }
-        responseDataMap.putData(Questions.QUESTIONS.toString(), (questions == null) ? new List[]{} : questions);
+        responseDataMap.putData(QUESTIONS.toString(), (questions == null) ? new List[]{} : questions);
         responseDataMap.setStatus(HttpStatus.OK);
-        responseDataMap.setMessage(SuccessMessages.FOUND.toString());
+        responseDataMap.setMessage(FOUND.toString());
         return responseDataMap;
 
     }
@@ -57,12 +59,12 @@ public class QuestionServiceImpl implements QuestionService {
             question = codingQuestionRepo.getQuestion(questionId);
 
         } else {
-            return buildErrorResponse(ErrorMessages.Q_TYPE_NOT_FOUND.toString());
+            return buildErrorResponse(Q_TYPE_NOT_FOUND.message());
         }
 
-        responseDataMap.putData(Questions.QUESTION.toString(), question);
+        responseDataMap.putData(QUESTION.toString(), question);
         responseDataMap.setStatus(HttpStatus.OK);
-        responseDataMap.setMessage(SuccessMessages.FOUND.toString());
+        responseDataMap.setMessage(FOUND.toString());
         return responseDataMap;
     }
 
@@ -72,13 +74,13 @@ public class QuestionServiceImpl implements QuestionService {
         if (questionTypeId == 1) {
             McqQuestion mcqQuestion = new McqQuestion(question);
             mcqQuestionRepo.addQuestion(mcqQuestion);
-            return buildResponseMap(SuccessMessages.ADD.toString());
+            return buildResponseMap(ADD.toString());
         } else if (questionTypeId == 2) {
             CodingQuestion codingQuestion = new CodingQuestion(question);
             codingQuestionRepo.addQuestion(codingQuestion);
-            return buildResponseMap(SuccessMessages.ADD.toString());
+            return buildResponseMap(ADD.toString());
         }
-        return buildErrorResponse(ErrorMessages.Q_TYPE_NOT_FOUND.toString());
+        return buildErrorResponse(Q_TYPE_NOT_FOUND.message());
     }
 
     public ResponseMap getQuestionByTag(String questionTag){
@@ -89,12 +91,12 @@ public class QuestionServiceImpl implements QuestionService {
 
         ResponseDataMap responseDataMap = new ResponseDataMap();
 
-        questionsMap.put(Questions.CODING.toString(), (codingQuestions == null) ? new List[]{} : codingQuestions);
-        questionsMap.put(Questions.MCQ.toString(), (mcqQuestions == null) ? new List[]{} : mcqQuestions);
+        questionsMap.put(CODING.toString(), (codingQuestions == null) ? new List[]{} : codingQuestions);
+        questionsMap.put(MCQ.toString(), (mcqQuestions == null) ? new List[]{} : mcqQuestions);
 
         responseDataMap.setStatus(HttpStatus.OK);
-        responseDataMap.setMessage(SuccessMessages.FOUND.toString());
-        responseDataMap.putData(Questions.QUESTION.toString(), questionsMap);
+        responseDataMap.setMessage(FOUND.toString());
+        responseDataMap.putData(QUESTION.toString(), questionsMap);
 
         return responseDataMap;
     }
@@ -104,15 +106,15 @@ public class QuestionServiceImpl implements QuestionService {
 
         switch (questionTypeId) {
             case 1:
-                McqQuestion mcqQuestion = new McqQuestion(question, true);
-                return (mcqQuestionRepo.updateQuestion(mcqQuestion) > 0) ? buildResponseMap(SuccessMessages.EDIT.toString()) :
-                        buildErrorResponse(ErrorMessages.Q_NOT_FOUND.toString());
+                Question mcqQuestion = new McqQuestion(question, true);
+                return (mcqQuestionRepo.updateQuestion((McqQuestion) mcqQuestion) > 0) ? buildResponseMap(EDIT.toString()) :
+                        buildErrorResponse(Q_NOT_FOUND.message());
             case 2:
-                CodingQuestion codingQuestion = new CodingQuestion(question, true);
-                return (codingQuestionRepo.updateQuestion(codingQuestion) > 0) ? buildResponseMap(SuccessMessages.EDIT.toString()) :
-                        buildErrorResponse(ErrorMessages.Q_NOT_FOUND.toString());
+                Question codingQuestion = new CodingQuestion(question, true);
+                return (codingQuestionRepo.updateQuestion((CodingQuestion) codingQuestion) > 0) ? buildResponseMap(EDIT.toString()) :
+                        buildErrorResponse(Q_NOT_FOUND.message());
             default:
-                return buildErrorResponse(ErrorMessages.Q_TYPE_NOT_FOUND.toString());
+                return buildErrorResponse(Q_TYPE_NOT_FOUND.toString());
         }
 
     }
@@ -121,13 +123,13 @@ public class QuestionServiceImpl implements QuestionService {
     public ResponseMap deleteQuestion(Integer questionTypeId, Integer questionId) {
         switch (questionTypeId) {
             case 1:
-                return (mcqQuestionRepo.deleteQuestion(questionId) > 0) ? buildResponseMap(SuccessMessages.DELETE.toString()) :
-                        buildErrorResponse(ErrorMessages.Q_NOT_FOUND.toString());
+                return (mcqQuestionRepo.deleteQuestion(questionId) > 0) ? buildResponseMap(DELETE.toString()) :
+                        buildErrorResponse(Q_NOT_FOUND.message());
             case 2:
-                return (codingQuestionRepo.deleteQuestion(questionId) > 0) ? buildResponseMap(SuccessMessages.DELETE.toString()) :
-                        buildErrorResponse(ErrorMessages.Q_NOT_FOUND.toString());
+                return (codingQuestionRepo.deleteQuestion(questionId) > 0) ? buildResponseMap(DELETE.toString()) :
+                        buildErrorResponse(Q_NOT_FOUND.message());
             default:
-                return buildErrorResponse(ErrorMessages.Q_TYPE_NOT_FOUND.toString());
+                return buildErrorResponse(Q_TYPE_NOT_FOUND.toString());
         }
     }
 

@@ -1,12 +1,11 @@
 package com.rogo.repo;
 
-import com.rogo.UtilityClasses.responseMessages.ErrorMessages;
+import com.rogo.Utils.responseMessages.ErrorMessages;
 import com.rogo.bean.McqQuestion;
-import com.rogo.UtilityClasses.mappers.McqQuestionRowMapper;
+import com.rogo.Utils.mappers.McqQuestionRowMapper;
 import com.rogo.exception.RogoCustomException;
 import io.micrometer.core.lang.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;

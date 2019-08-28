@@ -1,7 +1,7 @@
 package com.rogo.controller;
 
 import com.rogo.exception.RogoCustomException;
-import com.rogo.UtilityClasses.responseClasses.ResponseMap;
+import com.rogo.Utils.responseClasses.ResponseMap;
 import com.rogo.bean.User;
 import com.rogo.bean.UserLogin;
 import com.rogo.service.QuestionService;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.LinkedHashMap;
 
 @RestController
+@RequestMapping("/api")
 @CrossOrigin(origins = "*")
 public class RogoController {
     @Autowired

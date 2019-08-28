@@ -1,4 +1,4 @@
-package com.rogo.UtilityClasses.responseClasses;
+package com.rogo.Utils.responseClasses;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.http.HttpStatus;
 

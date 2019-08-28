@@ -1,4 +1,4 @@
-package com.rogo.UtilityClasses.responseMessages;
+package com.rogo.Utils.responseMessages;
 
 public enum SuccessMessages {
 

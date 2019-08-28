@@ -1,4 +1,4 @@
-package com.rogo.UtilityClasses.types;
+package com.rogo.Utils.types;
 
 
 public enum QuestionType {

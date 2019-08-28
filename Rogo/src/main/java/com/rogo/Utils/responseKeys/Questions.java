@@ -1,4 +1,4 @@
-package com.rogo.UtilityClasses.responseKeys;
+package com.rogo.Utils.responseKeys;
 
 public enum Questions {
     QUESTION{

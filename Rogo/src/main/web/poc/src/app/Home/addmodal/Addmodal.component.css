@@ -1,0 +1,5 @@
+input[type="text"],input[type="number"]{
+border-radius: 8px;
+width:auto;
+border:1px solid red;
+}

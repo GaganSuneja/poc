@@ -53,3 +53,7 @@ speed-measure-plugin.json
 /Rogo/src/main/webapp/.DS_Store
 /Rogo/src/main/webapp/Thumbs.db
 
+/node_modules
+/load_testing
+npm-debug.log
+package-lock.json

@@ -1,0 +1,35 @@
+[
+  {
+    "q_id": 7,
+    "q_text": "what is your name",
+    "option_a": "a",
+    "option_b": "b",
+    "option_c": "c",
+    "option_d": "d",
+    "q_type_id": 1,
+    "q_mark": 10,
+    "answer_key": 1
+  },
+  {
+    "q_id": 10,
+    "q_text": "what is your name",
+    "option_a": "a",
+    "option_b": "b",
+    "option_c": "c",
+    "option_d": "d",
+    "q_type_id": 1,
+    "q_mark": 10,
+    "answer_key": 1
+  },
+  {
+    "q_id": 11,
+    "q_text": "square root 4",
+    "option_a": "2",
+    "option_b": "4",
+    "option_c": "6",
+    "option_d": "8",
+    "q_type_id": 1,
+    "q_mark": 10,
+    "answer_key": 1
+  }
+]

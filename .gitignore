@@ -2,3 +2,54 @@
 /Rogo/application.properties
 /Rogo/.idea/workspace.xml
 /load_testing
+
+
+
+
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/Rogo/src/main/webapp/dist
+/Rogo/src/main/webapp/tmp
+/out-tsc
+# Only exists if Bazel was run
+/Rogo/src/main/webapp/bazel-out
+
+# dependencies
+/Rogo/src/main/webapp/node_modules
+
+# profiling files
+chrome-profiler-events.json
+speed-measure-plugin.json
+
+# IDEs and editors
+/Rogo/src/main/webapp/.idea
+/Rogo/src/main/webapp/.project
+/Rogo/src/main/webapp/.classpath
+/Rogo/src/main/webapp/.c9/
+/Rogo/src/main/webapp/*.launch
+/Rogo/src/main/webapp/.settings/
+/Rogo/src/main/webapp/*.sublime-workspace
+
+# IDE - VSCode
+/Rogo/src/main/webapp/.vscode/*
+/Rogo/src/main/webapp/!.vscode/settings.json
+/Rogo/src/main/webapp/!.vscode/tasks.json
+/Rogo/src/main/webapp/!.vscode/launch.json
+/Rogo/src/main/webapp/!.vscode/extensions.json
+/Rogo/src/main/webapp/.history/*
+
+# misc
+/Rogo/src/main/webapp/.sass-cache
+/Rogo/src/main/webapp/connect.lock
+/Rogo/src/main/webapp/coverage
+/libpeerconnection.log
+/Rogo/src/main/webapp/npm-debug.log
+/Rogo/src/main/webapp/yarn-error.log
+/Rogo/src/main/webapp/testem.log
+/Rogo/src/main/webapp/typings
+
+# System Files
+/Rogo/src/main/webapp/.DS_Store
+/Rogo/src/main/webapp/Thumbs.db
+

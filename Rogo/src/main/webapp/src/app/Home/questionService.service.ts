@@ -15,22 +15,22 @@ export class QuestionService{
     }
     add(obj:any):Observable<any>
     {
-        return this.http.post<any>("/rogo/api/question/",obj);
+        return this.http.post<any>("/api/question/",obj);
     }
     async display(typeId:any)
     {
         console.log('display api');
-        const response = await this.http.get<any>("/rogo/api/question/"+typeId).toPromise();
+        const response = await this.http.get<any>("/api/question/"+typeId).toPromise();
         this.question$.next(response.data ? response.data.questions : []);
 
     }
     editquestion(obj:any):Observable<any>
     {
-        return this.http.put<any>("/rogo/api/question/",obj);
+        return this.http.put<any>("/api/question/",obj);
     }
     deletequestion(TypeId:any,id:any):Observable<any>
     {
-        return this.http.delete<any>("/rogo/api/question/"+TypeId+"/"+id);
+        return this.http.delete<any>("/api/question/"+TypeId+"/"+id);
     }
 
 }

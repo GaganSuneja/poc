@@ -1,14 +1,10 @@
 package com.rogo.bean;
-
-
-import javax.swing.*;
 import java.util.LinkedHashMap;
-import java.util.Map;
+
 import com.rogo.config.*;
-import com.sun.xml.internal.ws.developer.SchemaValidation;
 import io.swagger.annotations.ApiModel;
 
-@ApiModel()
+@ApiModel
 public class McqQuestion extends Question {
 
     private String optionA;

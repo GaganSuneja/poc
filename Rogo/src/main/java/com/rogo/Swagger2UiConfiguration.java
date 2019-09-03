@@ -25,7 +25,7 @@ public class Swagger2UiConfiguration
                 .apis(RequestHandlerSelectors.basePackage("com.rogo.controller"))
                 // .paths(PathSelectors.any())
                 // .paths(PathSelectors.ant("/swagger2-demo"))
-                .paths(PathSelectors.regex("/.*"))
+//                .paths(PathSelectors.regex("/.*"))
                 .build().apiInfo(apiEndPointsInfo());
         // @formatter:on
     }

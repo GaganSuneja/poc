@@ -1,5 +1,9 @@
 package com.rogo.bean;
 
+import io.swagger.annotations.ApiModel;
+
+@ApiModel(description = "User model")
+
 public class User {
     private String userId;
     private int userTypeId;

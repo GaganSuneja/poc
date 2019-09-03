@@ -1,9 +1,11 @@
 package com.rogo.bean;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiModel;
 
+
+
+@ApiModel(description = "Question model")
 public class Question {
-    @ApiModelProperty(notes = "The database generated question ID")
     private int questionId;
     private int questionTypeId;
     private int questionMark;

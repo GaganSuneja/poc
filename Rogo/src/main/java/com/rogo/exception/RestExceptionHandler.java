@@ -1,5 +1,6 @@
 package com.rogo.exception;
 
+import io.swagger.annotations.ApiOperation;
 import org.postgresql.util.PSQLException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -57,6 +58,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return buildResponseEntity(apiError);
     }
 
+    @ApiOperation(value="Exception response")
     @ExceptionHandler(NullPointerException.class)
     protected ResponseEntity handleNullPointerException(NullPointerException ex){
         ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR);

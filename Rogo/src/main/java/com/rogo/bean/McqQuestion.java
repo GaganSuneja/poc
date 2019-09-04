@@ -4,7 +4,10 @@ import java.util.LinkedHashMap;
 import com.rogo.config.*;
 import io.swagger.annotations.ApiModel;
 
+import javax.persistence.Entity;
+
 @ApiModel
+@Entity
 public class McqQuestion extends Question {
 
     private String optionA;

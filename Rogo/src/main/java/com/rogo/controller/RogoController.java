@@ -1,8 +1,8 @@
 package com.rogo.controller;
 
+import com.rogo.bean.User;
 import com.rogo.exception.RogoCustomException;
 import com.rogo.Utils.responseClasses.ResponseMap;
-import com.rogo.bean.*;
 import com.rogo.bean.UserLogin;
 import com.rogo.service.QuestionService;
 import com.rogo.service.UserService;
